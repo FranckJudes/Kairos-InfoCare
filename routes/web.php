@@ -7,6 +7,7 @@ use App\Http\Controllers\GroupeUtilisateur\GroupeUtilisateurController;
 use App\Http\Controllers\Patients\PatientController;
 use App\Http\Controllers\Utilisateur\UtilisateurController;
 use App\Http\Controllers\RendezVous\RendezVousController;
+use App\Http\Controllers\Classement\ClassementController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/dashboard', function () {
@@ -30,6 +31,7 @@ Route::controller(AuthentificationController::class)->group(
     }
 );
 Route::get('/get-children/{id}', [EntitesController::class, 'getChildren'])->name('api.getChildren');
+Route::get('/get-tree', [ClassementController::class, 'getEntites']);
 
 //Groupe Utilisateur
 Route::resource('GroupeUtilisateur', GroupeUtilisateurController::class);
@@ -41,3 +43,5 @@ Route::resource('patient', PatientController::class);
 Route::resource('entites', EntitesController::class);
 //Groupe rendezVous
 Route::resource('rendezVous', RendezVousController::class);
+//Groupe Classemnt
+Route::resource('classement', ClassementController::class);

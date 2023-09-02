@@ -63,7 +63,7 @@
                                 </tr>   
                               @empty
                                 <tr>
-                                  <td colspan="5" style="text-align: center">
+                                  <td colspan="6" style="text-align: center">
                                       pas de groupe
                                   </td>
                                 </tr>
@@ -82,7 +82,7 @@
         </section>
         
     @endsection
-    {{-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="formModal"
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="formModal"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -117,7 +117,7 @@
             </div>
         </div>
     </div>
-</div> --}}
+</div>
 
     @section('FootLink')
      <script src="{{asset('assets/js/page/datatables.js')}}"></script>

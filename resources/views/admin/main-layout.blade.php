@@ -109,7 +109,7 @@
                 data-feather="shopping-bag"></i><span>Configuration</span></a>
             <ul class="dropdown-menu">
               <li><a class="nav-link" href="{{ url ('entites')}}">Entites</a></li>
-              <li><a class="nav-link" href="{{ url ('PlanClassement')}}">Plan de Classement</a></li>
+              <li><a class="nav-link" href="{{ url ('classement')}}">Plan de Classement</a></li>
 
             </ul>
           </li>

@@ -14,13 +14,20 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('lastname');
+            $table->string('sexe');
+            $table->string('cni');
+            $table->string('telephone');
+            $table->string('dateNaissance');
+            $table->string('lieuNaissance');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
+            $table->string('photo');
+            $table->unsignedBigInteger('entite_id')->nullable();         
             $table->timestamps();
+            $table->foreign('entite_id')->references('id')->on('entites')->onDelete('cascade')->onUpdate('cascade');
         });
-    }
+    }   
 
     /**
      * Reverse the migrations.

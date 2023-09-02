@@ -14,7 +14,7 @@ class EntitesController extends Controller
      */
     public function index()
     {
-
+        
         return view('admin.Entites.index',[
             // 'entites' =>  Entites::whereNull('parent_id')->get()
             'entites' => Entites::all()
@@ -35,21 +35,11 @@ class EntitesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    // public function store(RequestEntite $request)
-    // {
-       
-    // //    Entites::create($request->validated()); 
-    // //     return view('admin.Entites.index',[
-    // //         'entites' =>  Entites::all()
-    // //     ]);
-
-
   
-    // }
 
     public function store(RequestEntite $request)
         {
-            // dd($request);
+            
             $entity = new Entites();
 
             if ($request->input('parent_id')) {
@@ -118,12 +108,17 @@ class EntitesController extends Controller
 
     }
 
-    public function getChildren($id)
+    public function search($request)
     {
-       
-        $parent_id = $id;
-        $children = Entites::where('parent_id', $id)->get();
-      
-        return response()->json($children);
+       $output ='';
+        $documents = Entites::where('libelle','Like','%'.$request->search.'%')
+                                ->get();
+                                
+        foreach ($documents as  $entite) {
+           $output.='
+               <option id="visible" value="'.  $entite->id .'">'. $entite->libelle .'</option>
+           ';
+        }
+        // return response()->json($children);
     }
 }

@@ -23,7 +23,7 @@
                             @method($entites->exists ? 'PUT': 'POST')
                             <div class="form-group">
                               <label name="code" >code</label>
-                              <input type="text" name="code" placeholder="code" value="{{old('code',$entites->code)}}" id="code" class="form-control">
+                              <input type="number" name="code" placeholder="code" value="{{old('code',$entites->code)}}" id="code" class="form-control">
                               @if ($errors->has('code'))
                                   <span class="text-danger">{{ $errors->first('code') }}</span>
                               @endif
@@ -37,12 +37,14 @@
                             </div>
                             <div class="form-group">
                               <label name="libelle" >Organisition parente</label>
-                              <select class="form-control select2" name="parent_id">
-                                <option selected="" value="">Choose...</option>
-                                @foreach ($Organisation as $entite)
-                                    <option value="{{ $entite->id }}">{{ $entite->libelle }}</option>
-                                @endforeach
-                            </select> 
+                              
+                                  <select class="form-control select2" name="parent_id">
+                                    <option selected="" value="">Choose...</option>
+                                    @foreach ($Organisation as $entite)
+                                        <option id="actuel" value="{{ $entite->id }}">{{ $entite->libelle }}</option>
+                                    @endforeach
+                                </select> 
+                              
                               @if ($errors->has('organisation'))
                                   <span class="text-danger">{{ $errors->first('organisation') }}</span>
                               @endif
@@ -72,4 +74,36 @@
      <script src="{{asset('assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js')}}"></script>
      <script src="{{asset('assets/bundles/prism/prism.js')}}"></script>
      <script src="{{ asset('assets/bundles/select2/dist/js/select2.full.min.js')}}"></script>
+
+     <script>
+        
+      $('#select2').on('keyup',function()
+      {
+        $value = $(this).val();
+      
+        if ($value) {
+               $('#actuel').hide();
+               $('#visible').show();
+            }else
+            {
+              $('#actuel').show();
+              $('#visble').hide();
+            }
+
+        $.ajax({
+
+            type : 'get',
+            url : '{{URL:: to('search')}}',
+            data: {'search':$value},
+
+            success:function(data)
+            {  
+              console.log(data);
+              $('#Content ').html(data);
+            },
+   
+      
+        });
+      });
+     </script>
     @endsection
