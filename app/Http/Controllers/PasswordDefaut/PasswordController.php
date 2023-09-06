@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Test;
+namespace App\Http\Controllers\PasswordDefaut;
 
 use App\Http\Controllers\Controller;
+use App\Models\Passwords;
 use Illuminate\Http\Request;
 
-class TestController extends Controller
+class PasswordController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,9 @@ class TestController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.Passwords.index',[
+            'Passwords' => Passwords::all()
+        ]);
     }
 
     /**
@@ -44,9 +47,11 @@ class TestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Passwords $passwords)
     {
-        //
+        return view('admin.Passwords.update',[
+            'Passwords' => $passwords
+        ]);
     }
 
     /**
@@ -57,7 +62,12 @@ class TestController extends Controller
      */
     public function edit($id)
     {
-        //
+        $Password = Passwords::find($id);
+      
+    
+        return view('admin.Passwords.update',[
+            'Password' =>  $Password
+        ]);  
     }
 
     /**
@@ -67,9 +77,16 @@ class TestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, string $passwords)
     {
-        //
+         $password = Passwords::find();
+
+         $password->valeur = $request->valeur;
+
+         return view('admin.Passwords.index',[
+            'Passwords' => Passwords::all()
+        ]); 
+         
     }
 
     /**
@@ -82,4 +99,18 @@ class TestController extends Controller
     {
         //
     }
+
+    public function updatePassword(Request $request){
+       $pass =  Passwords::find(1);
+
+       $pass->update([
+            'valeur' => $request->valeur
+       ]);
+
+          return view('admin.Passwords.index',[
+        'Passwords' => Passwords::all()
+          ]);
+    }
+
+
 }

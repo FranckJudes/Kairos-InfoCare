@@ -12,14 +12,14 @@
                       <div class="card">
                         <div class="card-header">
                           <h4>Groupe Utilisateur</h4>
+                          <div class="card-header-action">     
+                            <a type="button" class="btn btn-primary" href="/GroupeUtilisateur/create">
+                              Ajouter Un GroupeUtilisateur
+                            </a>
+                          </div>
                         </div>
                             <div>
                               <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">     
-                                  <a type="button" class="btn btn-primary" href="/GroupeUtilisateur/create">
-                                    Ajouter Un GroupeUtilisateur
-                                  </a>
-                                </div>
                               </div>
                             </div>
 
@@ -37,8 +37,8 @@
                                 </tr>
                               </thead>
                               <tbody>
-                              @forelse ($groupeUtilisateur as $groupe)
                            
+                              @forelse ($groupesAvecNombreUtilisateurs as $groupe)
                                 <tr>
                                   <td>
                                     {{ $groupe->id}}
@@ -50,17 +50,18 @@
                                     {{ $groupe->description}}
                                   </td>
                                   <td>
-                                    <div>
-                                      <a  href="{{ route('GroupeUtilisateur.edit' , $groupe->id)}}" class="btn btn-primary" >modifier</a>
-                                      <form action="{{ route('GroupeUtilisateur.destroy' , $groupe->id)}}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                          <button  class="btn btn-danger">Supprimer</button>
-                                      </form>
-                                    </div>   
                                     
+                                    {{ $groupe->users_count }}
+                                  </td>
+                                  <td>
+                                    <div>
+                                      <a  href="{{ route('GroupeUtilisateur.show',$groupe)}}" class="btn btn-success" >Voir plus</a>
+                                      <a  href="{{ route('GroupeUtilisateur.edit' , $groupe->id)}}" class="btn btn-primary" >modifier</a>
+                                      <a  class="btn btn-danger" href="{{url('deleteGroupeUtilisateur',$groupe->id)}}">Supprimer</a>
+                                    </div>   
                                   </td>
                                 </tr>   
+                             
                               @empty
                                 <tr>
                                   <td colspan="6" style="text-align: center">

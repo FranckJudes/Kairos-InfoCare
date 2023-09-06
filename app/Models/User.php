@@ -41,34 +41,26 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+   
     protected $fillable = [
         'name',
+        'lastname',
+        'sexe',
+        'dateNaissance',
+        'lieuNaissance',
+        'telephone',
         'email',
-        'password',
+        'cni',
+        'photo',
+        'password'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    public function entite(){
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+        return $this->belongsToMany(Entites::class,'entite_user');
+    }
+    public function groupeUtilisateur(){
+
+        return $this->belongsToMany(Groupes::class,'groupe_user');
+    }
 }

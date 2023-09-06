@@ -9,32 +9,22 @@
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4>Les entites</h4>
-                    <div class="card-header-action">     
-                      <a type="button" class="btn btn-primary" href="/entites/create">
-                        Ajouter Une Entite
-                   </a>
-                    </div>
+                    <h4>{{__('passwords.titre')}}</h4>
                   </div>
-                      <div>
-                        <div class="card-body">
-                        </div>
-                      </div>
-
                   <div class="card-body">
                     <div class="table-responsive">
                       <table class="table table-striped" id="table-2">
                         <thead>
                           <tr>
                             <th>id</th>
-                            <th>code</th>
-                            <th>Organisition</th>
+                            <th>libelle</th>
+                            <th>Mot de passe</th>
                             <th>Description</th>
                             <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>
-                        @forelse ($entites as $groupe)
+                        @forelse ($Passwords as $groupe)
                      
                           <tr>
                             <td>
@@ -44,22 +34,14 @@
                               {{$groupe->libelle}} 
                             </td>
                             <td>
-                             
-                              @if (!$groupe->parent_id)
-                                  /
-                              @else
-                                  {{$groupe->parent->libelle}}
-                              @endif
+                                {{$groupe->valeur}}
                             </td>
                             <td>
                               {{ $groupe->description}} 
                             </td>
                             <td>
                               <div>
-                                <a  href="classement" class="btn btn-success" >Voir plus</a>
-                                <a  href="{{ route('entites.edit' , $groupe->id)}}" class="btn btn-primary" >modifier</a>
-                                <a  class="btn btn-danger" href="{{url('deleteEntite',$groupe->id)}}">Supprimer</a>
-                                
+                                <a  href="{{ route('passwords.edit' , $groupe->id)}}" class="btn btn-primary" >modifier</a>
                               </div>   
                               
                             </td>
@@ -67,7 +49,7 @@
                         @empty
                           <tr>
                             <td colspan="5" style="text-align: center">
-                                Pas d'entites
+                                Pas de Password
                             </td>
                           </tr>
                         @endforelse  

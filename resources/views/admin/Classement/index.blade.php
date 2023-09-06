@@ -42,7 +42,19 @@
                       view:{
                         showIcon:true
                       }
-                    }
+                    },
+                    view: {
+                      addDiyDom: null,
+                      removeHoverDom: null,
+                      selectedMulti: false
+                    },
+                  edit: {
+                      enable: true,
+                      showRemoveBtn: true,
+                      showRenameBtn: true,
+                      removeTitle: "Supprimer",
+                      renameTitle: "Renommer"
+                  },
                   }
                 $.ajax({
                 url: "get-tree",

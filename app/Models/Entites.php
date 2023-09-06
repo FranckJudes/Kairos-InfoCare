@@ -51,5 +51,9 @@ class Entites extends Model
     {
         return $this->hasMany(Entites::class, 'parent_id');
     }
+    public function users()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 }

@@ -16,9 +16,10 @@ class EntitesController extends Controller
     {
         
         return view('admin.Entites.index',[
-            // 'entites' =>  Entites::whereNull('parent_id')->get()
             'entites' => Entites::all()
         ]);
+        // return redirect()->route('entites.index', ['entites' => Entites::all()]);
+
     }
 
     /**
@@ -108,17 +109,11 @@ class EntitesController extends Controller
 
     }
 
-    public function search($request)
+    public function delete($id)
     {
-       $output ='';
-        $documents = Entites::where('libelle','Like','%'.$request->search.'%')
-                                ->get();
-                                
-        foreach ($documents as  $entite) {
-           $output.='
-               <option id="visible" value="'.  $entite->id .'">'. $entite->libelle .'</option>
-           ';
-        }
-        // return response()->json($children);
+        Entites::find($id)->delete();
+        return redirect()->route('entites.index',[
+            'entites' =>  Entites::all()
+        ]);
     }
 }

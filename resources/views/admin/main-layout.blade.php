@@ -113,6 +113,15 @@
 
             </ul>
           </li>
+          <li class="dropdown">
+            <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                data-feather="shopping-bag"></i><span>Parametres</span></a>
+            <ul class="dropdown-menu">
+              <li><a class="nav-link" href="{{ url ('entites')}}">Langue</a></li>
+              <li><a class="nav-link" href="{{ url ('passwords')}}">Mot de passe par defaut</a></li>
+
+            </ul>
+          </li>
 {{-- 
           <li class="dropdown">
             <a href="#" class="menu-toggle nav-link has-dropdown"><i

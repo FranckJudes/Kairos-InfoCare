@@ -32,4 +32,8 @@ class Groupes extends Model
         'description'
     ];
     
+    public function users(){
+
+        return $this->belongsToMany(Groupes::class,'groupe_user');
+    }
 }

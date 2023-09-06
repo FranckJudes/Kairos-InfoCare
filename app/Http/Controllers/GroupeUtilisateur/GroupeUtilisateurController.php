@@ -15,9 +15,10 @@ class GroupeUtilisateurController extends Controller
     public function index()
     {
        
-        // $groupeUtilisateur = Groupes::all();
+        // $groupesAvecNombreUtilisateurs = Groupes::withCount('users')->get();
         return view('admin.GroupeUtilisateur.index',[
-            'groupeUtilisateur' => Groupes::all()
+            'groupeUtilisateur' => Groupes::all(),
+            'groupesAvecNombreUtilisateurs' => Groupes::withCount('users')->get()
         ]);
     }
 
@@ -47,7 +48,8 @@ class GroupeUtilisateurController extends Controller
         $groupe->save();
 
         return view('admin.GroupeUtilisateur.index',[
-            'groupeUtilisateur' => Groupes::all()
+            'groupeUtilisateur' => Groupes::all(),
+            'groupesAvecNombreUtilisateurs' => Groupes::withCount('users')->get()
         ]);
         
     }
@@ -55,9 +57,13 @@ class GroupeUtilisateurController extends Controller
     /**
      * Display the specified resource.
 */
-    public function show(Groupes $groupeUtilisateur)
+    public function show(string $groupeUtilisateur)
     {
-        //
+        $groupeUtilisateur = Groupes::find($groupeUtilisateur);
+      
+        return view('admin.GroupeUtilisateur.show',[
+            'groupeUtilisateur' =>  $groupeUtilisateur
+        ]);
     }
 
     /**
@@ -66,10 +72,11 @@ class GroupeUtilisateurController extends Controller
     public function edit(string $id)
     {
         $groupeUtilisateur = Groupes::find($id);
-      
-    
+        
+       
         return view('admin.GroupeUtilisateur.create',[
-            'groupeUtilisateur' =>  $groupeUtilisateur
+            'groupeUtilisateur' =>  $groupeUtilisateur,
+
         ]);
     }
 
@@ -81,7 +88,8 @@ class GroupeUtilisateurController extends Controller
         $groupeUtilisateur = Groupes::find($id);
         $groupeUtilisateur->update($request->validated());
         return view('admin.GroupeUtilisateur.index',[
-            'groupeUtilisateur' => Groupes::all()
+            'groupeUtilisateur' => Groupes::all(),
+            'groupesAvecNombreUtilisateurs' => Groupes::withCount('users')->get()
         ]);
     }
 
@@ -95,6 +103,15 @@ class GroupeUtilisateurController extends Controller
         $groupeUtilisateur->delete();
         return view('admin.GroupeUtilisateur.index',[
             'groupeUtilisateur' => Groupes::all()
+        ]); 
+    }
+
+    public function delete($id)
+    {
+        Groupes::find($id)->delete();
+        return view('admin.GroupeUtilisateur.index',[
+            'groupeUtilisateur' => Groupes::all(),
+            'groupesAvecNombreUtilisateurs' => Groupes::withCount('users')->get()
         ]); 
     }
 }

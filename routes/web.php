@@ -8,6 +8,8 @@ use App\Http\Controllers\Patients\PatientController;
 use App\Http\Controllers\Utilisateur\UtilisateurController;
 use App\Http\Controllers\RendezVous\RendezVousController;
 use App\Http\Controllers\Classement\ClassementController;
+use App\Http\Controllers\PasswordDefaut\PasswordController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/dashboard', function () {
@@ -30,7 +32,7 @@ Route::controller(AuthentificationController::class)->group(
         Route::post('doLogin','doLogin')->name('doLogin');
     }
 );
-Route::get('/get-children/{id}', [EntitesController::class, 'getChildren'])->name('api.getChildren');
+// Route::get('/get-children/{id}', [EntitesController::class, 'getChildren'])->name('api.getChildren');
 Route::get('/get-tree', [ClassementController::class, 'getEntites']);
 
 //Groupe Utilisateur
@@ -45,3 +47,12 @@ Route::resource('entites', EntitesController::class);
 Route::resource('rendezVous', RendezVousController::class);
 //Groupe Classemnt
 Route::resource('classement', ClassementController::class);
+//Groupe Mot de passe par Defaut
+Route::resource('passwords', PasswordController::class);
+
+
+// Suppression 
+Route::get('deleteEntite/{id}', [EntitesController::class, 'delete']);
+Route::get('deleteUtilisateur/{id}', [UtilisateurController::class, 'delete']);
+Route::get('deleteGroupeUtilisateur/{id}', [GroupeUtilisateurController::class, 'delete']);
+Route::post('passwordUpdate', [PasswordController::class, 'updatePassword']);

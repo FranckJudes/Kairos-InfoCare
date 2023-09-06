@@ -16,8 +16,17 @@ class AdminSeeder extends Seeder
     {
         User::create([
             'name' => 'Admin',
+            'lastname' => 'Admin',
             'email' => 'admin@kairos.com',
-            'password' => bcrypt('12345'),
+            'sexe' => '/',
+            'cni' => '/',
+            'telephone' => '+237 66666666',
+            'dateNaissance' => '/',
+            'LieuNaissance' => 'Yaounde',
+            'password' => bcrypt('`12345`'),
+            'photo' => 'assets/img/user.png'
         ]);
+
+        
     }
 }
