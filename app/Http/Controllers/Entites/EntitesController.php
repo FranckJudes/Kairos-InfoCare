@@ -60,7 +60,7 @@ class EntitesController extends Controller
                 $entity->save();
             }
 
-            return redirect()->route('entites.index', ['entites' => Entites::all()]);
+            return  view('admin.Entites.index',['entites' => Entites::all()]);
         }
 
     /**
@@ -79,8 +79,9 @@ class EntitesController extends Controller
         $entites = Entites::find($id);
       
     
-        return redirect()->route('entites.create',[
-            'entites' =>  $entites
+        return view('admin.Entites.create',[
+            'entites' =>  $entites,
+            'Organisation' => Entites::all()
         ]);
     }
 
@@ -91,7 +92,7 @@ class EntitesController extends Controller
     {
         $entites = Entites::find($id);
         $entites->update($request->validated());
-        return redirect()->route('entites.index',[
+        return view('admin.Entites.index',[
             'entites' =>  Entites::all()
         ]);
     }
@@ -103,7 +104,7 @@ class EntitesController extends Controller
     {
         $entites =  Entites::find($id);
         $entites->delete();
-        return redirect()->route('entites.index',[
+        return view('admin.Entites.index',[
             'entites' =>  Entites::all()
         ]);
 
@@ -112,7 +113,7 @@ class EntitesController extends Controller
     public function delete($id)
     {
         Entites::find($id)->delete();
-        return redirect()->route('entites.index',[
+        return  view('admin.Entites.index',[
             'entites' =>  Entites::all()
         ]);
     }

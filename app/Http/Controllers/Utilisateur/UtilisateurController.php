@@ -45,9 +45,9 @@ class UtilisateurController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(RequestUtilisateur $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
+        // $data = $request->validated();
         // dd($request);
         $passTmp = Passwords::find(1);
         $defaultPassword = $passTmp->valeur;

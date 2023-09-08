@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Classement;
 
 use App\Http\Controllers\Controller;
 use App\Models\Entites;
+use App\Models\PlanClassement;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 
 class ClassementController extends Controller
@@ -11,11 +13,13 @@ class ClassementController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @ \Illuminate\Http\Response
      */
     public function index()
     {
-        return view('admin.Classement.index');
+        return view('admin.Classement.index',[
+            'PlanClassement' => PlanClassement::all()
+        ]);
     }
 
     /**
@@ -25,7 +29,7 @@ class ClassementController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -36,7 +40,32 @@ class ClassementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $entity = new PlanClassement();
+
+        if ($request->input('parent_id')) {
+            $parentId = $request->input('parent_id');
+
+            if ($parentId < $entity->id) {
+                throw new Exception('L\'entité parent ne peut pas être une entité enfant.');
+            }
+
+            $entity->libelle = $request->libelle;
+            $entity->description = $request->description;
+            $entity->type = $request->type;
+            $entity->parent()->associate($request->input('parent_id'));
+            $entity->save();
+        } else {
+            $entity->libelle = $request->libelle;
+            $entity->description = $request->description;
+            $entity->type = $request->type;
+            $entity->save();
+        }
+
+       
+        // Toastr::success('Ajout avec success', 'Title', ["positionClass" => "toast-top-right"]);
+        return view('admin.Classement.index',[
+            'PlanClassement' => PlanClassement::all()
+        ]);
     }
 
     /**
@@ -47,7 +76,8 @@ class ClassementController extends Controller
      */
     public function show($id)
     {
-        //
+          $treeData =  PlanClassement::find($id);
+         return response()->json($treeData);
     }
 
     /**
@@ -85,7 +115,45 @@ class ClassementController extends Controller
     }
     public function getEntites()
     {
-        $entites = Entites::all();
+        $customIcons = [
+            'dossier' => asset('/assets/Ztree/css/zTreeStyle/img/diy/folder.png'),
+            'fichier' => asset('/assets/Ztree/css/zTreeStyle/img/diy/2.png'),
+        ];
+        $entites = PlanClassement::all();
+
+        $treeData = [];
+        foreach ($entites as $entite) {
+            if ($entite->type == 'dossier') {
+   
+                $treeData[] = [
+                    'id' => $entite->id,
+                    'pId' => $entite->parent_id,
+                    'name' => $entite->libelle,
+                    'type' => $entite->type,
+                    'icon'=> $customIcons['dossier']
+                ];
+            }else {
+                $treeData[] = [
+                    'id' => $entite->id,
+                    'pId' => $entite->parent_id,
+                    'name' => $entite->libelle,
+                    'type' => $entite->type,
+                    'icon'=> $customIcons['fichier']
+                ];
+            }
+        }
+    
+            return response()->json(['treeData' => $treeData]);
+
+    }
+
+    public function delete($id)
+    {
+        $sup =  PlanClassement::find($id);
+
+        $sup->delete();
+
+        $entites = PlanClassement::all();
 
         $treeData = [];
         foreach ($entites as $entite) {
@@ -93,8 +161,10 @@ class ClassementController extends Controller
                 'id' => $entite->id,
                 'pId' => $entite->parent_id,
                 'name' => $entite->libelle,
+                'type' => $entite->type
             ];
         }
         return response()->json($treeData);
+         
     }
 }

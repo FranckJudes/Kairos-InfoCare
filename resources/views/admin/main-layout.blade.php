@@ -7,6 +7,7 @@
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <title>Admin - Dashboard</title>
+  <link rel="stylesheet" href="{{asset('assets/Toastr/toastr.min.css')}}">
   <!-- General CSS Files -->
   {{-- Ajouter les liens --}}
   @yield('HeadLink')
@@ -250,6 +251,9 @@
       </footer>
     </div>
   </div>
+  <script src="{{asset('assets/Toastr/jquery.min.js')}}"></script>
+  <script src="{{asset('assets/Toastr/toastr.min.js')}}"></script>
+  {!! Toastr::message() !!}
   <!-- General JS Scripts -->
   <script src="{{asset('assets/js/app.min.js')}}"></script>
   <!-- JS Libraies -->
@@ -257,10 +261,12 @@
   <!-- Template JS File -->
   <script src="{{asset('assets/js/scripts.js')}}"></script>
   <!-- Custom JS File -->
-  <script src="{{asset('assets/js/custom.js')}}"></script>
+  <script src="{{asset('assets/js/custom.js')}}"></script>  
     {{-- Ajouter les liens --}}
     @yield('FootLink')
     {{--  --}}
+
+
 </body>
 
 

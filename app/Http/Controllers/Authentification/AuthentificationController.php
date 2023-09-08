@@ -16,16 +16,18 @@ class AuthentificationController extends Controller
 
     public function doLogin(Request $request)
 
-    {
+    {   
+            // dd($request);
             // $credentials =  $request->validated();
            $credentials =  $request->except(['_token']);
-           if (Auth::attempt($credentials)) 
+        
+           if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) 
            {
                     $request->session()->regenerate();
                     return redirect()->intended('dashboard');
            } 
 
-           // Renvoyer aau login en cas d'erreur avec l'identifiant du email
+           // Renvoyer au login en cas d'erreur avec l'identifiant du email
            return  to_route('login')->withErrors([
                     'email' => 'Email Invalide',
                     'password' => 'Mot de passe Incorrect'

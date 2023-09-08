@@ -59,10 +59,15 @@ class GroupeUtilisateurController extends Controller
 */
     public function show(string $groupeUtilisateur)
     {
-        $groupeUtilisateur = Groupes::find($groupeUtilisateur);
-      
+        $groupe = Groupes::findOrFail($groupeUtilisateur);
+        // $groupe = Groupes::with('users')->find($groupeUtilisateur);
+
+        $utilisateursDuGroupe = $groupe->users;
+
         return view('admin.GroupeUtilisateur.show',[
-            'groupeUtilisateur' =>  $groupeUtilisateur
+            'groupeAvecNombreUtilisateurs' => $groupe->loadCount('users'),
+            'utilisateursDuGroupe' => $utilisateursDuGroupe
+
         ]);
     }
 

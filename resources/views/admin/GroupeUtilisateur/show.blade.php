@@ -7,7 +7,9 @@
     <section class="section">
       <div class="card">
         <div class="card-header">
-          <h4>Details sur {{$groupeUtilisateur->libelle}}</h4>
+          <h4>Details sur 
+            {{$groupeAvecNombreUtilisateurs->libelle}}
+          </h4>
         </div>
         <div class="card-body">
           <div class="row">
@@ -37,35 +39,53 @@
                       </tr>
                     </thead>
                     <tbody>
-                       
                           <tr>
                             <th scope="row">1</th>
-                            <td>{{$groupeUtilisateur->libelle}}</td>
-                            <td>{{$groupeUtilisateur->description}}</td>
-                            <td>{{$groupeUtilisateur->users_count}}</td>
+                            <td>{{$groupeAvecNombreUtilisateurs->libelle}}</td>
+                            <td>{{$groupeAvecNombreUtilisateurs->description}}</td>
+                            <td>{{$groupeAvecNombreUtilisateurs->users_count}}</td>
                           </tr>
                     </tbody>
                   </table>
                 </div>
                 <div class="tab-pane fade" id="list-profile" role="tabpanel"
                   aria-labelledby="list-profile-list">
-                  Deserunt cupidatat anim ullamco ut dolor anim sint nulla amet incididunt tempor ad ut
-                  pariatur officia culpa laboris occaecat. Dolor in nisi aliquip in non magna amet nisi sed
-                  commodo proident anim deserunt nulla veniam occaecat reprehenderit esse ut eu culpa fugiat
-                  nostrud pariatur adipisicing incididunt consequat nisi non amet.
+                    <h5>Les Access</h5>
                 </div>
                 <div class="tab-pane fade" id="list-messages" role="tabpanel"
                   aria-labelledby="list-messages-list">
-                  In quis non esse eiusmod sunt fugiat magna pariatur officia anim ex officia nostrud amet
-                  nisi pariatur eu est id ut exercitation ex ad reprehenderit dolore nostrud sit ut culpa
-                  consequat magna ad labore proident ad qui et tempor exercitation in aute veniam et velit
-                  dolore irure qui ex magna ex culpa enim anim ea mollit consequat ullamco exercitation in.
+                  <h5>Les Droits</h5>
                 </div>
                 <div class="tab-pane fade" id="list-settings" role="tabpanel"
                   aria-labelledby="list-settings-list">
-                  Lorem ipsum culpa in ad velit dolore anim labore incididunt do aliqua sit veniam commodo
-                  elit dolore do labore occaecat laborum sed quis proident fugiat sunt pariatur. Cupidatat ut
-                  fugiat anim ut dolore excepteur ut voluptate dolore excepteur mollit commodo.
+                  <table class="table table-striped table-hover" id="tableExport" style="width:100%;">
+                    <thead>
+                      <tr>
+                        <th>{{__('utilisateur.photo')}}</th>
+                        <th>{{__('utilisateur.nom')}}</th>
+                        <th>{{__('utilisateur.sexe')}}</th>
+                        <th>{{__('utilisateur.dateNaissance')}}</th>
+                        <th>{{__('utilisateur.email')}}</th>
+                        <th>{{__('utilisateur.telephone')}}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @forelse ($utilisateursDuGroupe as $item) 
+                        <tr>
+                          <td><img  src="{{asset('storage/'. $item->photo)}}" width="35"></td>
+                          <td>{{$item->name}}   {{$item->lastname}}</td>
+                          <td>{{$item->sexe}}</td>
+                          <td>{{$item->dateNaissance}}</td>
+                          <td>{{$item->email}}</td>
+                          <td>{{$item->telephone}}</td>
+                        </tr>
+                        @empty
+                        <tr>
+                          <td colspan="6" style="text-align: center">Pas D'Utilisateur</td>
+                        </tr>
+                      @endforelse
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>

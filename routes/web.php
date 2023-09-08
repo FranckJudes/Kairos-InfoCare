@@ -9,15 +9,24 @@ use App\Http\Controllers\Utilisateur\UtilisateurController;
 use App\Http\Controllers\RendezVous\RendezVousController;
 use App\Http\Controllers\Classement\ClassementController;
 use App\Http\Controllers\PasswordDefaut\PasswordController;
-
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/dashboard', function () {
     
     return view('admin.dashboard');
 });
+
+Route::get('/resetPassword', function () {
+    
+    return view('auth.resetAuth');
+});
+
+
 Route::get('/', function () {
     
+   
+
     return view('admin.main-layout');
 });
 
@@ -56,3 +65,5 @@ Route::get('deleteEntite/{id}', [EntitesController::class, 'delete']);
 Route::get('deleteUtilisateur/{id}', [UtilisateurController::class, 'delete']);
 Route::get('deleteGroupeUtilisateur/{id}', [GroupeUtilisateurController::class, 'delete']);
 Route::post('passwordUpdate', [PasswordController::class, 'updatePassword']);
+Route::get('deleteClassement/{id}', [ClassementController::class, 'delete']);
+

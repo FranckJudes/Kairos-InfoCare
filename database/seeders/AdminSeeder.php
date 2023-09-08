@@ -23,7 +23,7 @@ class AdminSeeder extends Seeder
             'telephone' => '+237 66666666',
             'dateNaissance' => '/',
             'LieuNaissance' => 'Yaounde',
-            'password' => bcrypt('`12345`'),
+            'password' => bcrypt('12345'),
             'photo' => 'assets/img/user.png'
         ]);
 
