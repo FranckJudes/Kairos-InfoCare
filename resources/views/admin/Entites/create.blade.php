@@ -6,7 +6,8 @@
     @endsection
 
     
-    @section('title', $entites->exists ? "Editer une Entite" : "Creer une Entite")
+    @section('title', $entites->exists ? __('entite.titreUpdate') : __('entite.titreCreer'))
+
 
     @section('content')
    
@@ -23,7 +24,7 @@
                             @method($entites->exists ? 'PUT': 'POST')
                             <div class="form-group">
                               <label name="code" >code</label>
-                              <input type="number" name="code" placeholder="code" value="{{old('code',$entites->code)}}" id="code" class="form-control">
+                              <input type="text" name="code" placeholder="code" value="{{old('code',$entites->code)}}" id="code" class="form-control">
                               @if ($errors->has('code'))
                                   <span class="text-danger">{{ $errors->first('code') }}</span>
                               @endif
@@ -36,10 +37,10 @@
                                 @endif
                             </div>
                             <div class="form-group">
-                              <label name="libelle" >Organisition parente</label>
+                              <label name="libelle" >{{__('entite.OrganisationParent')}}</label>
                               
                                   <select class="form-control select2" name="parent_id">
-                                    <option selected="" value="">Choose...</option>
+                                    <option selected="" value="">{{__('entite.choisirOrganisation')}}</option>
                                     @foreach ($Organisation as $entite)
                                         <option id="actuel" value="{{ $entite->id }}">{{ $entite->libelle }}</option>
                                     @endforeach
@@ -58,7 +59,7 @@
                                 @endif
                             </div>
         
-                                <button value="Enregistrer" class="btn btn-primary m-t-15 waves-effect">Enregistrer</button>
+                                <button value="Enregistrer" class="btn btn-success m-t-15 waves-effect">{{__('entite.btnEnregister')}}</button>
                         </form>
                       
                     </div>

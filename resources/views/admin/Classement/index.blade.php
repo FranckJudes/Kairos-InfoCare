@@ -22,28 +22,9 @@
                 </div>
                 
             <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-                {{-- <div class="card">
-                  <div class="body">
-                    <div id="mail-nav">
-               
-                      <ul class="online-user" id="online-offline">
-                          <li>
-                             <button type="button" class="btn btn-primary waves-effect btn-compose m-b-15" data-toggle="modal" data-target="#exampleModal">faire un ajoute </button>
-                          </li>
-                          <li>
-                              <button id="supprimer" class="btn btn-danger waves-effect btn-compose m-b-15"> supprimer</button>
-                          </li>
-                          <li>
-                            <button id="modifier"  class="btn btn-success waves-effect btn-compose m-b-15" data-toggle="modal" data-target="#exampleModal"> modifier</button>
-                          </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div> --}}
-
                 <div class="card">
                   <div class="card-header">
-                    <h4>Icon Button</h4>
+                    <h4>Gestion</h4>
                   </div>
                   <div class="card-body">
                     <div class="row">
@@ -51,10 +32,10 @@
                         <button  class="btn btn-icon icon-left btn-success" data-toggle="modal" data-target="#exampleModal" style="width: 100%"><i class="fas fa-plus"></i> Ajouter</a>
                       </div>
                       <div class="col-6">
-                        <button class="btn btn-icon icon-left btn-primary" id="modifier"  data-toggle="modal" data-target="#exampleModal"  style="width: 100%"><i class="far fa-edit"></i> Modifier</a>
+                        <button class="btn btn-icon icon-left btn-primary" id="modifier"  data-toggle="modal" data-target="#exampleModal2"  style="width: 100%"><i class="far fa-edit"></i> Modifier</a>
                       </div>
                       <div class="col-12 p-3">
-                        <button  id="supprimer" class="btn btn-icon icon-left btn-danger" style="width: 100%"><i class="fas fa-trash-alt"></i> Suppresion</a>
+                        <button  id="supprimer" class="btn btn-icon icon-left btn-danger" style="width: 100%"><i class="fas fa-trash-alt"></i> Suppression</a>
                       </div>
                     </div>
                   </div>
@@ -100,13 +81,16 @@ aria-hidden="true">
                   <input type="text"  @required(true) class="form-control" value="{{old('description')}}" id="description" value="" placeholder="Description" name="description"></textarea> 
               </div>
               <div class="form-group">
-                <input value="Enregistrer" type="submit"  class="btn btn-success m-t-15 waves-effect" value="Enregistrer">
+                <button value="Enregistrer" type="submit"  class="btn btn-success m-t-15 waves-effect" value="Enregistrer">Enregistrer</button>
               </div>
           </form>
       </div>
   </div>
 </div>
 </div>
+
+
+
 @section('FootLink')
   <script src="{{asset('assets/Ztree/js/jquery.ztree.all.js')}}"></script>
   <script src="{{asset('assets/Ztree/js/jquery.ztree.core.js')}}"></script>
@@ -184,8 +168,9 @@ aria-hidden="true">
                           document.getElementById('description').value = data.description;
                           document.getElementById('type').value = data.type;
                           document.getElementById('parent_id').value = data.parent_id;
-
-
+                          var form = document.getElementById("create-folder-form"); 
+                          form.id = "update-folder-form";
+                          console.log(form);
                         }
                       });
                     }else{
@@ -195,54 +180,56 @@ aria-hidden="true">
                     
                    
               });
-
-  </script>
-      <script>
-      $(document).ready(function () {
-
-        $('#create-folder-form').submit(function (e) {
-            e.preventDefault();
-
-            // Récupérez les données du formulaire
-            var libelle = $('#libelle').val();
-            var parent_id = $('#parent_id').val(); // Vous pouvez récupérer cette valeur depuis votre arborescence zTree
-            var description = $('#description').val();
-            var type = $('#type').val();
-
-            console.log(libelle , parent_id,description,type);
-            // Envoyez les données au serveur via AJAX
-            $.ajax({
-                url: "classement", // Remplacez par la route appropriée
-                type: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    libelle: libelle,
-                    parent_id: parent_id,
-                    description: description,
-                    type :  type
-                },
-                
-                success: function (response) {
-                  location.reload(true); 
-                    
-                },
-                error: function (xhr, status, error) {
-                    // Gérez les erreurs ici
-                    console.error(error);
-                }
-            });
-        
-        });
-
-        
-    });
-
-    $('#exampleModal').on('hidden.bs.modal', function () {
-        var h5Element = $('#formModal');
-       h5Element.text('Ajouter un Dossier / un Fichier');
-  });
-
       </script>
+      <script>
+               $(document).ready(function () {
+
+                    $('#create-folder-form').submit(function (e) {
+                        e.preventDefault();
+
+                        // Récupérez les données du formulaire
+                        var libelle = $('#libelle').val();
+                        var parent_id = $('#parent_id').val(); // Vous pouvez récupérer cette valeur depuis votre arborescence zTree
+                        var description = $('#description').val();
+                        var type = $('#type').val();
+
+                        console.log(libelle , parent_id,description,type);
+                        // Envoyez les données au serveur via AJAX
+                        $.ajax({
+                            url: "classement", // Remplacez par la route appropriée
+                            type: 'POST',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                libelle: libelle,
+                                parent_id: parent_id,
+                                description: description,
+                                type :  type
+                            },
+                            
+                            success: function (response) {
+                              location.reload(true); 
+                                
+                            },
+                            error: function (xhr, status, error) {
+                                // Gérez les erreurs ici
+                                console.error(error);
+                            }
+                        });
+                    
+                    });
+
+
+                    
+                    
+                });
+
+                $('#exampleModal').on('hidden.bs.modal', function () {
+                    var h5Element = $('#formModal');
+                  h5Element.text('Ajouter un Dossier / un Fichier');
+              });
+      </script>
+
+  
+
     
 @endsection
-

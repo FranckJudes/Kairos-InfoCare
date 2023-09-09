@@ -24,6 +24,7 @@ class AdminSeeder extends Seeder
             'dateNaissance' => '/',
             'LieuNaissance' => 'Yaounde',
             'password' => bcrypt('12345'),
+            'password_changed' => 1,
             'photo' => 'assets/img/user.png'
         ]);
 

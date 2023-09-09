@@ -18,7 +18,7 @@ class ClassementController extends Controller
     public function index()
     {
         return view('admin.Classement.index',[
-            'PlanClassement' => PlanClassement::all()
+            'PlanClassement' => PlanClassement::where('type' , 'dossier')->get()
         ]);
     }
 
@@ -62,7 +62,6 @@ class ClassementController extends Controller
         }
 
        
-        // Toastr::success('Ajout avec success', 'Title', ["positionClass" => "toast-top-right"]);
         return view('admin.Classement.index',[
             'PlanClassement' => PlanClassement::all()
         ]);
@@ -100,7 +99,23 @@ class ClassementController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            // Recherchez l'élément à mettre à jour
+            $element = PlanClassement::findOrFail($id);
+    
+            // Mettez à jour les attributs avec les nouvelles valeurs
+            $element->libelle = $request->input('libelle');
+            $element->parent_id = $request->input('parent_id');
+            $element->description = $request->input('description');
+            $element->type = $request->input('type');
+    
+            // Enregistrez les modifications
+            $element->save();
+    
+            return response()->json(['success' => true, 'message' => 'Élément mis à jour avec succès.']);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Erreur lors de la mise à jour de l\'élément.']);
+        }
     }
 
     /**

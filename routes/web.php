@@ -9,6 +9,7 @@ use App\Http\Controllers\Utilisateur\UtilisateurController;
 use App\Http\Controllers\RendezVous\RendezVousController;
 use App\Http\Controllers\Classement\ClassementController;
 use App\Http\Controllers\PasswordDefaut\PasswordController;
+use App\Http\Controllers\Langue\LangageController;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Route;
 
@@ -39,8 +40,20 @@ Route::controller(AuthentificationController::class)->group(
     function(){
         Route::get('/login','index')->name('login');
         Route::post('doLogin','doLogin')->name('doLogin');
+        Route::get('resetPassword','resetPage')->name('resetPage');
+        Route::post('dochangePasseword','changePassword')->name('changePassword');
+        Route::delete('logout','logout')->name('logout');
     }
 );
+
+
+//Choix de la langue
+Route::controller(LangageController::class)->group(
+    function(){
+        Route::get('locale/{langue}','setLang')->name('setLang');
+    }
+);
+
 // Route::get('/get-children/{id}', [EntitesController::class, 'getChildren'])->name('api.getChildren');
 Route::get('/get-tree', [ClassementController::class, 'getEntites']);
 

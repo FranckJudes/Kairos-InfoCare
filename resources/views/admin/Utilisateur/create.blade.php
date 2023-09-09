@@ -133,7 +133,7 @@
                     <div class="col-lg-4 col-sm-4">
                     </div> 
                     <div class="col-lg-4 col-sm-4">
-                        <button value="Enregistrer" style="width: 100%" class="btn btn-primary m-t-15 waves-effect">{{__('utilisateur.enregister')}}</button>
+                        <button value="Enregistrer" style="width: 100%" class="btn btn-success m-t-15 waves-effect">{{__('utilisateur.enregister')}}</button>
                     </div> 
                     <div class="col-lg-4 col-sm-4">
                     </div> 

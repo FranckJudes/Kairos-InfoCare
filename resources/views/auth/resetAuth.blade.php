@@ -7,6 +7,8 @@
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <title>Login</title>
+  <link rel="stylesheet" href="{{asset('assets/Toastr/toastr.min.css')}}">
+
   <!-- General CSS Files -->
   <link rel="stylesheet" href="{{asset('assets/css/app.min.css')}}">
   <!-- Template CSS -->
@@ -30,11 +32,14 @@
                 </div>
                 <div class="card-body">
                   <p class="text-muted">Enter Your New Password</p>
-                  <form method="POST">
+                  <form method="POST" action="{{ url('dochangePasseword')}}">
+                    @csrf
                             <div class="form-group">
                                     <label for="password">New Password</label>
-                                    <input id="password" type="password" class="form-control pwstrength" data-indicator="pwindicator"
-                                        name="password" tabindex="2" required>
+                                    <input id="password" type="password" class="form-control pwstrength" data-indicator="pwindicator" name="password" tabindex="2" required>
+                                    @if ($errors->has('password'))
+                                        <span class="text-danger">{{ $errors->first('password') }}</span>
+                                    @endif
                             <div id="pwindicator" class="pwindicator">
                                     <div class="bar"></div>
                                     <div class="label"></div>
@@ -42,8 +47,10 @@
                             </div>
                             <div class="form-group">
                                     <label for="password-confirm">Confirm Password</label>
-                                    <input id="password-confirm" type="password" class="form-control" name="confirm-password"
-                                        tabindex="2" required>
+                                    <input id="password-confirm" type="password" class="form-control" name="confirm_password" tabindex="2" required>
+                                    @if ($errors->has('confirm_password'))
+                                        <span class="text-danger">{{ $errors->first('confirm_password') }}</span>
+                                    @endif
                             </div>
                             <div class="form-group">
                                     <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
@@ -58,6 +65,9 @@
         </div>
       </section>
   </div>
+  <script src="{{asset('assets/Toastr/jquery.min.js')}}"></script>
+  <script src="{{asset('assets/Toastr/toastr.min.js')}}"></script>
+  {!! Toastr::message() !!}
   <!-- General JS Scripts -->
   <script src="{{asset('assets/js/app.min.js')}}"></script>
   <!-- JS Libraies -->

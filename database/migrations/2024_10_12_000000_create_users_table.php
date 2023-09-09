@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('photo')->nullable();
+            $table->boolean('password_changed')->default(false);
             $table->timestamps();
         });
 

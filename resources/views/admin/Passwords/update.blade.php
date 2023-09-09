@@ -26,7 +26,7 @@
                                     @endif
                                 </div>
                         
-                            <button value="Enregistrer" class="btn btn-primary m-t-15 waves-effect">{{__('utilisateur.enregister')}}</button>
+                            <button value="Enregistrer" class="btn btn-success m-t-15 waves-effect">{{__('utilisateur.enregister')}}</button>
                     </form>
                 </div>
             </div>

@@ -9,10 +9,12 @@
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4>Les entites</h4>
+                    <h4>
+                      {{__('entite.titrePage')}}
+                    </h4>
                     <div class="card-header-action">     
                       <a type="button" class="btn btn-primary" href="/entites/create">
-                        Ajouter Une Entite
+                       {{__('entite.btnAjout')}}
                    </a>
                     </div>
                   </div>
@@ -28,7 +30,7 @@
                           <tr>
                             <th>id</th>
                             <th>code</th>
-                            <th>Organisition</th>
+                            <th>{{__('entite.organisation')}}</th>
                             <th>Description</th>
                             <th>Action</th>
                           </tr>
@@ -56,9 +58,9 @@
                             </td>
                             <td>
                               <div>
-                                <a  href="classement" class="btn btn-success" >Voir plus</a>
-                                <a  href="{{ route('entites.edit' , $groupe->id)}}" class="btn btn-primary" >modifier</a>
-                                <a  class="btn btn-danger" href="{{url('deleteEntite',$groupe->id)}}">Supprimer</a>
+                                <a  href="classement" class="btn btn-success" >{{__('entite.VoirPlus')}}</a>
+                                <a  href="{{ route('entites.edit' , $groupe->id)}}" class="btn btn-primary" >{{__('entite.btnEditer')}}</a>
+                                <a  class="btn btn-danger" href="{{url('deleteEntite',$groupe->id)}}">{{__('entite.btnDelete')}}</a>
                                 
                               </div>   
                               
@@ -67,7 +69,7 @@
                         @empty
                           <tr>
                             <td colspan="5" style="text-align: center">
-                                Pas d'entites
+                             {{__('entite.AucuneEntite')}}
                             </td>
                           </tr>
                         @endforelse  

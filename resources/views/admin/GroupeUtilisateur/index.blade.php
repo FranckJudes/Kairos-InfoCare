@@ -11,10 +11,10 @@
                     <div class="col-12">
                       <div class="card">
                         <div class="card-header">
-                          <h4>Groupe Utilisateur</h4>
+                          <h4>{{__('groupeUtilisateur.titrePage')}}</h4>
                           <div class="card-header-action">     
                             <a type="button" class="btn btn-primary" href="/GroupeUtilisateur/create">
-                              Ajouter Un GroupeUtilisateur
+                              {{__('groupeUtilisateur.btnAjout')}}
                             </a>
                           </div>
                         </div>
@@ -29,10 +29,9 @@
                               <thead>
                                 <tr>
                                   <th>id</th>
-                                  <th>nom</th>
-                                  <th>description</th>
-                                  <th>effectif</th>
-                                  {{--  <th></th> --}}
+                                  <th>{{__('groupeUtilisateur.libelle')}}</th>
+                                  <th>{{__('groupeUtilisateur.description')}}</th>
+                                  <th>{{__('groupeUtilisateur.effectif')}}</th>
                                   <th>Action</th>
                                 </tr>
                               </thead>
@@ -65,7 +64,7 @@
                               @empty
                                 <tr>
                                   <td colspan="6" style="text-align: center">
-                                      pas de groupe
+                                    {{__('groupeUtilisateur.AucunGroup')}}
                                   </td>
                                 </tr>
                               @endforelse  
@@ -83,42 +82,7 @@
         </section>
         
     @endsection
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="formModal"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="formModal">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="POST" action="{{ url('GroupeUtilisateur') }}">
-                    @csrf
-                    <div class="form-group">
-                        <label name="libelle" >Libelle</label>
-                        <input type="text" name="libelle" value="{{old('libelle')}}" id="libelle" class="form-control">
-                        @if ($errors->has('libelle'))
-                            <span class="text-danger">{{ $errors->first('libelle') }}</span>
-                        @endif
-                    </div>
 
-                    <div class="form-group">
-                        <label name="description">Description</label>
-                        <textarea type="text" class="form-control"  value="{{old('description')}}" placeholder="Description"
-                            name="description"></textarea> 
-                        @if ($errors->has('description'))
-                            <span class="text-danger">{{ $errors->first('description') }}</span>
-                        @endif
-                    </div>
-
-                    <button value="Enregistrer" class="btn btn-primary m-t-15 waves-effect">Enregistrer</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
     @section('FootLink')
      <script src="{{asset('assets/js/page/datatables.js')}}"></script>

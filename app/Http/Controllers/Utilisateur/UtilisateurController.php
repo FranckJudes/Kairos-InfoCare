@@ -8,9 +8,9 @@ use App\Models\Entites;
 use App\Models\Groupes;
 use App\Models\Passwords;
 use App\Models\User;
-use App\Models\Utilisateurs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Brian2694\Toastr\Facades\Toastr;
 
 class UtilisateurController extends Controller
 {
@@ -47,18 +47,42 @@ class UtilisateurController extends Controller
      */
     public function store(Request $request)
     {
-        // $data = $request->validated();
-        // dd($request);
+        $request->validate([
+            'name' => 'required',
+            'lastname' => 'required',
+            'sexe' => 'required',
+            'cni'  => 'required',
+            'telephone' => 'required',
+            'dateNaissance' => ['required','date'],
+            'lieuNaissance' => 'required',
+            'email' => 'required|unique',
+            'entite_id' => 'nullable',
+            'photo' => ['nullable','mimes:jpg,bmp,png,jpeg,pgp,*'],
+            'organisation' => 'nullable'
+        ]);
         $passTmp = Passwords::find(1);
         $defaultPassword = $passTmp->valeur;
        
+        try {
+            $Utilisateurs = new User;
 
-        $Utilisateurs = new User;
-
-        if($request->has('photo')) {
-            $profileImage = $request->file('photo');
-            $profileImagePath = $profileImage->store('profile_images', 'public');
-            $Utilisateurs->name = $request->name;
+            if($request->has('photo')) {
+                $profileImage = $request->file('photo');
+                $profileImagePath = $profileImage->store('profile_images', 'public');
+                $Utilisateurs->name = $request->name;
+                $Utilisateurs->lastname = $request->lastname;
+                $Utilisateurs->sexe = $request->sexe;
+                $Utilisateurs->cni = $request->cni;
+                $Utilisateurs->lastname = $request->lastname;
+                $Utilisateurs->telephone = $request->telephone;
+                $Utilisateurs->lieuNaissance = $request->lieuNaissance;
+                $Utilisateurs->dateNaissance = $request->dateNaissance;
+                $Utilisateurs->email = $request->email;
+                $Utilisateurs->password = Hash::make($defaultPassword);
+                $Utilisateurs->photo = $profileImagePath;
+                $Utilisateurs->save();
+            }else {
+                $Utilisateurs->name = $request->name;
             $Utilisateurs->lastname = $request->lastname;
             $Utilisateurs->sexe = $request->sexe;
             $Utilisateurs->cni = $request->cni;
@@ -67,50 +91,47 @@ class UtilisateurController extends Controller
             $Utilisateurs->lieuNaissance = $request->lieuNaissance;
             $Utilisateurs->dateNaissance = $request->dateNaissance;
             $Utilisateurs->email = $request->email;
-            $Utilisateurs->password = Hash::make($defaultPassword);
-            $Utilisateurs->photo = $profileImagePath;
+            $Utilisateurs->password =Hash::make($defaultPassword);
+            // $Utilisateurs->photo = $profileImagePath;
             $Utilisateurs->save();
-        }else {
-            $Utilisateurs->name = $request->name;
-        $Utilisateurs->lastname = $request->lastname;
-        $Utilisateurs->sexe = $request->sexe;
-        $Utilisateurs->cni = $request->cni;
-        $Utilisateurs->lastname = $request->lastname;
-        $Utilisateurs->telephone = $request->telephone;
-        $Utilisateurs->lieuNaissance = $request->lieuNaissance;
-        $Utilisateurs->dateNaissance = $request->dateNaissance;
-        $Utilisateurs->email = $request->email;
-        $Utilisateurs->password =Hash::make($defaultPassword);
-        // $Utilisateurs->photo = $profileImagePath;
-        $Utilisateurs->save();
+    
+            }
+    
+    
+                if($request->organisation != null){
+                    
+                    foreach($request->organisation as $orga)
+                    {
+                        $Utilisateurs->entite()->attach($orga);
+                        $Utilisateurs->save();
+    
+                    }
+                }
+    
+                if($request->groupes != null){
+                    
+                    foreach($request->groupes as $orga)
+                    {
+                        $Utilisateurs->groupeUtilisateur()->attach($orga);
+                        $Utilisateurs->save();
+    
+                    }
+                }
+                Toastr::success('Creation avec success', 'Title', ["positionClass" => "toast-top-right"]);
+                return redirect()->route('Utilisateur.index', ['Utilisateurs' => User::all()]);
+        } catch (\Throwable $th) {
+            Toastr::error('Echec de Creation', 'Title', ["positionClass" => "toast-top-right"]);
+            return view('admin.Utilisateur.create', [
+                'Utilisateur' => new User,
+                "Organisation" => Entites::all(),
+                "groupes" => Groupes::all()
+            ]);
 
         }
 
-
-            if($request->organisation != null){
-                
-                foreach($request->organisation as $orga)
-                {
-                    $Utilisateurs->entite()->attach($orga);
-                    $Utilisateurs->save();
-
-                }
-            }
-
-            if($request->groupes != null){
-                
-                foreach($request->groupes as $orga)
-                {
-                    $Utilisateurs->groupeUtilisateur()->attach($orga);
-                    $Utilisateurs->save();
-
-                }
-            }
+       
            
-           
-            
         
-        return redirect()->route('Utilisateur.index', ['Utilisateurs' => User::all()]);
     }
 
     /**
@@ -142,7 +163,23 @@ class UtilisateurController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $Utilisateurs =  User::find($id);
+        $request->validate([
+            'name' => 'required',
+            'lastname' => 'required',
+            'sexe' => 'required',
+            'cni'  => 'required',
+            'telephone' => 'required',
+            'dateNaissance' => ['required','date'],
+            'lieuNaissance' => 'required',
+            'email' => 'required|unique',
+            'entite_id' => 'nullable',
+            'photo' => ['nullable','mimes:jpg,bmp,png,jpeg,pgp,*'],
+            'organisation' => 'nullable'
+        ]);
+
+
+        try {
+            $Utilisateurs =  User::find($id);
         
             $Utilisateurs->name = $request->name;
             $Utilisateurs->lastname = $request->lastname;
@@ -183,7 +220,21 @@ class UtilisateurController extends Controller
 
                 }
             }
+            Toastr::success('Mise a jout avec success', 'Title', ["positionClass" => "toast-top-right"]);
             return redirect()->route('Utilisateur.index', ['Utilisateurs' => User::all()]);
+        } catch (\Throwable $th) {
+            Toastr::error('Echec de Creation', 'Title', ["positionClass" => "toast-top-right"]);
+            $Utilisateur = User::find($id);
+         
+            $Organisation = Entites::all();
+       
+            return view('admin.Utilisateur.create',[
+                'Utilisateur' =>  $Utilisateur,
+                'Organisation' => $Organisation,
+                "groupes" => Groupes::all()
+            ]);
+        }
+
 
     }
 
@@ -210,6 +261,8 @@ class UtilisateurController extends Controller
         $Utilisateurs->groupeUtilisateur()->detach();
 
         $Utilisateurs->delete();
+        Toastr::success('Suppression avec success', 'Title', ["positionClass" => "toast-top-right"]);
+
 
         return redirect()->route('Utilisateur.index', ['Utilisateurs' => User::all()]);
 

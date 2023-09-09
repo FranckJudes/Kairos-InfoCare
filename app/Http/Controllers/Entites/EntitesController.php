@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestEntite;
 use App\Models\Entites;
 use DB;
+use Brian2694\Toastr\Facades\Toastr;
+
 use Exception;
 class EntitesController extends Controller  
 {
@@ -43,21 +45,33 @@ class EntitesController extends Controller
             
             $entity = new Entites();
 
-            if ($request->input('parent_id')) {
-                $parentId = $request->input('parent_id');
 
-                if ($parentId < $entity->id) {
-                    throw new Exception('L\'entité parent ne peut pas être une entité enfant.');
+            try {
+                //code...
+                if ($request->input('parent_id')) {
+                    $parentId = $request->input('parent_id');
+    
+                    if ($parentId < $entity->id) {
+                        throw new Exception('L\'entité parent ne peut pas être une entité enfant.');
+                    }
+    
+                    $entity->code = $request->code;
+                    $entity->libelle = $request->libelle;
+                    $entity->description = $request->description;
+                    $entity->parent()->associate($request->input('parent_id'));
+                    $entity->save();
+                    Toastr::success('Creation avec succes', 'Succès');
+
+                } else {
+                    $entity->fill($request->validated());
+                    $entity->save();
+                    Toastr::success('Creation avec succes', 'Succès');
+
                 }
 
-                $entity->code = $request->code;
-                $entity->libelle = $request->libelle;
-                $entity->description = $request->description;
-                $entity->parent()->associate($request->input('parent_id'));
-                $entity->save();
-            } else {
-                $entity->fill($request->validated());
-                $entity->save();
+            } catch (\Throwable $th) {
+                Toastr::error('erreur de la creation', 'Succès');
+
             }
 
             return  view('admin.Entites.index',['entites' => Entites::all()]);
@@ -91,10 +105,17 @@ class EntitesController extends Controller
     public function update(RequestEntite $request, string $id)
     {
         $entites = Entites::find($id);
-        $entites->update($request->validated());
-        return view('admin.Entites.index',[
-            'entites' =>  Entites::all()
-        ]);
+        try {
+            $entites->update($request->validated());
+            Toastr::success('Mise a jour avec succes', 'Succès');
+
+            return view('admin.Entites.index',[
+                'entites' =>  Entites::all()
+            ]);
+            //code...
+        } catch (\Throwable $th) {
+            Toastr::error('erreur de mise a jour', 'Succès');
+        }
     }
 
     /**
@@ -112,9 +133,16 @@ class EntitesController extends Controller
 
     public function delete($id)
     {
-        Entites::find($id)->delete();
-        return  view('admin.Entites.index',[
-            'entites' =>  Entites::all()
-        ]);
+        try {
+            Entites::find($id)->delete();
+            Toastr::success('Suppression avec success', 'Succès');
+            return  view('admin.Entites.index',[
+                'entites' =>  Entites::all()
+            ]);
+            
+        } catch (\Throwable $th) {
+            Toastr::error('Echec de suppression', 'Succès');
+
+        }
     }
 }

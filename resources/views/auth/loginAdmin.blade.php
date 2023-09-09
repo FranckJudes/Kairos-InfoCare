@@ -7,6 +7,8 @@
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <title>Login</title>
+  <link rel="stylesheet" href="{{asset('assets/Toastr/toastr.min.css')}}">
+
   <!-- General CSS Files -->
   <link rel="stylesheet" href="{{asset('assets/css/app.min.css')}}">
   <!-- Template CSS -->
@@ -115,6 +117,9 @@
       </div>
     </section>
   </div>
+  <script src="{{asset('assets/Toastr/jquery.min.js')}}"></script>
+  <script src="{{asset('assets/Toastr/toastr.min.js')}}"></script>
+  {!! Toastr::message() !!}
   <!-- General JS Scripts -->
   <script src="{{asset('assets/js/app.min.js')}}"></script>
   <!-- JS Libraies -->

@@ -48,7 +48,15 @@
         </div>
         <ul class="navbar-nav navbar-right">
           <li class="dropdown"><a href="#" data-toggle="dropdown"
-              class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="assets/img/user.png"
+            class="nav-link dropdown-toggle nav-link-lg nav-link-user"> 
+
+            <img alt="choisir la langue" src="{{ App::getLocale() == 'en' ? 'assets/bundles/flag-icon-css/flags/4x3/gb.svg' : 'assets/bundles/flag-icon-css/flags/4x3/fr.svg' }}" class="user-img-radious-style user-icon">
+            <span class="d-sm-none d-lg-inline-block"></span></a>
+          <div class="dropdown-menu dropdown-menu-right pullDown">
+            <a href="locale/en" class="dropdown-item has-icon" id="lang-en"> <img class="img-fluid" src="assets/bundles/flag-icon-css/flags/4x3/gb.svg" alt="United Kingdom Flag" style="width: 30px; height:30px">&nbsp;Anglais
+           <a href="locale/fr" class="dropdown-item has-icon" id="lang-fr"> <img class="img-fluid" src="assets/bundles/flag-icon-css/flags/4x3/fr.svg" style="width: 30px; height:30px" alt="France Flag">&nbsp;Francais</a>
+        </li>
+          <li class="dropdown"><a href="#" data-toggle="dropdown"  class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="assets/img/user.png"
                 class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
               <div class="dropdown-title">Hello Sarah Smith</div>
@@ -68,7 +76,7 @@
       <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
-            <a href="index.html"> <img alt="image" src="assets/img/logo.png" class="header-logo" /> <span
+            <a href="index.html"> <img alt="image" src="assets/img/logo.png"  class="header-logo" /> <span
                 class="logo-name">Otika</span>
             </a>
           </div>
@@ -122,24 +130,7 @@
               <li><a class="nav-link" href="{{ url ('passwords')}}">Mot de passe par defaut</a></li>
 
             </ul>
-          </li>
-{{-- 
-          <li class="dropdown">
-            <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                data-feather="shopping-bag"></i><span>Patients</span></a>
-            <ul class="dropdown-menu">
-              <li><a class="nav-link" href="{{ url ('patient')}}">patients</a></li>
-            </ul>
-          </li>
-          <li class="dropdown">
-            <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                data-feather="shopping-bag"></i><span>Rendez-vous</span></a>
-            <ul class="dropdown-menu">
-              <li><a class="nav-link" href="{{ url ('rendezVous')}}">rendez-vous</a></li>
-            </ul>
-          </li> --}}
-          
-          
+          </li>          
         </aside>
       </div>
       <!-- Main Content -->
@@ -265,7 +256,24 @@
     {{-- Ajouter les liens --}}
     @yield('FootLink')
     {{--  --}}
-
+    <script>
+          $(document).ready(function() {
+              $("#lang-en").click(function(e) {
+                  e.preventDefault(); // Empêcher la navigation par défaut
+                  // Mettre à jour l'icône (remplacez l'URL de l'icône si nécessaire)
+                  window.location.href= "locale/en";
+                  $(".user-icon").attr("src", "assets/bundles/flag-icon-css/flags/4x3/gb.svg");
+              });
+          
+              $("#lang-fr").click(function(e) {
+                  e.preventDefault(); // Empêcher la navigation par défaut
+                  // Mettre à jour l'icône (remplacez l'URL de l'icône si nécessaire)
+                  $(".user-icon").attr("src", "assets/bundles/flag-icon-css/flags/4x3/fr.svg");
+                  window.location.href= "locale/fr";  
+              });
+          });
+      </script>
+      
 
 </body>
 

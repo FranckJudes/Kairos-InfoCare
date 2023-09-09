@@ -33,7 +33,7 @@ class RequestUtilisateur extends FormRequest
             'lieuNaissance' => 'required',
             'email' => 'required|unique',
             'entite_id' => 'nullable',
-            'photo' => ['nullable','mimes:jpg,bmp,png,jpeg,pgp,'],
+            'photo' => ['nullable','mimes:jpg,bmp,png,jpeg,pgp,*'],
             'organisation' => 'nullable'
         ];
     }
