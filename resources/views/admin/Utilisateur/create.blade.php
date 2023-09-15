@@ -61,7 +61,7 @@
                               </div>
                               <div class="form-group">
                                 <label name="telephone">{{__('utilisateur.telephone')}}</label>
-                                <input type="number" class="form-control"  value="{{old('telephone',$Utilisateur->telephone)}}" placeholder="N_Tel"
+                                <input type="number" min="0" class="form-control"  value="{{old('telephone',$Utilisateur->telephone)}}" placeholder="N_Tel"
                                     name="telephone" id="telephone"></textarea> 
                                 @if ($errors->has('telephone'))
                                     <span class="text-danger">{{ $errors->first('telephone') }}</span>
@@ -130,13 +130,11 @@
                                 @endif
                             </div>
                         </div>
-                    <div class="col-lg-4 col-sm-4">
-                    </div> 
-                    <div class="col-lg-4 col-sm-4">
+                    
+                    <div class="col-lg-6 col-sm-6">
                         <button value="Enregistrer" style="width: 100%" class="btn btn-success m-t-15 waves-effect">{{__('utilisateur.enregister')}}</button>
                     </div> 
-                    <div class="col-lg-4 col-sm-4">
-                    </div> 
+                    
                     @if ($Utilisateur->exists)
                         <div class="col-lg-6 col-sm-6">
                             <button value=""  style="width: 100%" class="btn btn-danger m-t-15 waves-effect">{{__('utilisateur.ReninialiserPass')}}</button>

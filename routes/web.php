@@ -9,8 +9,8 @@ use App\Http\Controllers\Utilisateur\UtilisateurController;
 use App\Http\Controllers\RendezVous\RendezVousController;
 use App\Http\Controllers\Classement\ClassementController;
 use App\Http\Controllers\PasswordDefaut\PasswordController;
+use App\Http\Controllers\Parametres\ParametresController;
 use App\Http\Controllers\Langue\LangageController;
-use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/dashboard', function () {
@@ -25,9 +25,7 @@ Route::get('/resetPassword', function () {
 
 
 Route::get('/', function () {
-    
    
-
     return view('admin.main-layout');
 });
 
@@ -46,11 +44,17 @@ Route::controller(AuthentificationController::class)->group(
     }
 );
 
+// Settings L'Application
+Route::controller(ParametresController::class)->group(
+    function(){
+        Route::get('/settings','index')->name('settings');
+    }
+);
 
 //Choix de la langue
 Route::controller(LangageController::class)->group(
     function(){
-        Route::get('locale/{langue}','setLang')->name('setLang');
+        Route::get('locale/{langue}','setLang')->name('locale');
     }
 );
 

@@ -13,12 +13,67 @@ return new class extends Migration
     {
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
-            $table->string('nomPrenoms');
+            // Personal Info
+            $table->string('name');
+            $table->string('lastname');
             $table->string('sexe');
-            $table->string('adresseMail')->nullable();
-            $table->string('NumeroTelephone')->nullable();
             $table->string('dateNaissance');
-            $table->string('quartier');
+            $table->string('OrientationSexuel');
+            $table->string('GenreIdentite');
+            $table->string('telephone');
+            $table->string('carteIdentite');
+            $table->string('titre');
+            // Contact
+            $table->string('adresse');
+            $table->string('codePostal');
+            $table->string('nomMere');
+            $table->string('region');
+            $table->string('NumeroUrgence');
+            $table->string('NumeroProfessionel');
+            $table->string('courriel');
+            $table->string('');
+            $table->string('');
+            // Choix
+            $table->string('');
+            $table->string('');
+            $table->string('');
+            $table->string('');
+            $table->string('');
+            $table->string('');
+             // Employeur
+             $table->string('');
+             $table->string('');
+             $table->string('');
+             $table->string('');
+             $table->string('');
+             $table->string('');
+              // Employeur
+              $table->string('');
+              $table->string('');
+              $table->string('');
+              $table->string('');
+              $table->string('');
+              $table->string('');
+            //  Date de Deces 
+            $table->string('dateDeces');
+            $table->string('raisonDeces');
+            // Gardien du Patient
+            $table->string('nameGardien');
+            $table->string('LienParenteGardien');
+            $table->string('sexeGardien');
+            $table->string('adresseGardien');
+            $table->string('villeGardien');
+            $table->string('emailGardien');
+            $table->string('codePostalGardien');
+            $table->string('TelephoneGardien');
+            // Assurance du Patient
+            $table->string('');
+            $table->string('');
+            $table->string('');
+            $table->string('');
+            $table->string('');
+            $table->string('');
+        
             $table->timestamps();
         });
     }

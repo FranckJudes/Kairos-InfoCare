@@ -47,7 +47,8 @@ class UtilisateurController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        dd($request);
+        $request = $request->validate([
             'name' => 'required',
             'lastname' => 'required',
             'sexe' => 'required',
@@ -163,19 +164,20 @@ class UtilisateurController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'name' => 'required',
-            'lastname' => 'required',
-            'sexe' => 'required',
-            'cni'  => 'required',
-            'telephone' => 'required',
-            'dateNaissance' => ['required','date'],
-            'lieuNaissance' => 'required',
-            'email' => 'required|unique',
-            'entite_id' => 'nullable',
-            'photo' => ['nullable','mimes:jpg,bmp,png,jpeg,pgp,*'],
-            'organisation' => 'nullable'
-        ]);
+        // dd($request);
+        // $request->validate([
+        //     'name' => 'required',
+        //     'lastname' => 'required',
+        //     'sexe' => 'required',
+        //     'cni'  => 'required',
+        //     'telephone' => 'required',
+        //     'dateNaissance' => ['required','date'],
+        //     'lieuNaissance' => 'required',
+        //     'email' => 'required|unique',
+        //     'entite_id' => 'nullable',
+        //     'photo' => ['nullable','mimes:jpg,bmp,png,jpeg,pgp,*'],
+        //     'organisation' => 'nullable'
+        // ]);
 
 
         try {

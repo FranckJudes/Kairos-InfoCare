@@ -50,19 +50,19 @@
           <li class="dropdown"><a href="#" data-toggle="dropdown"
             class="nav-link dropdown-toggle nav-link-lg nav-link-user"> 
 
-            <img alt="choisir la langue" src="{{ App::getLocale() == 'en' ? 'assets/bundles/flag-icon-css/flags/4x3/gb.svg' : 'assets/bundles/flag-icon-css/flags/4x3/fr.svg' }}" class="user-img-radious-style user-icon">
+            <img alt="choisir la langue" src="{{ App::getLocale() == 'en' ? asset('assets/bundles/flag-icon-css/flags/4x3/gb.svg') : asset('assets/bundles/flag-icon-css/flags/4x3/fr.svg') }}" class="user-img-radious-style user-icon">
             <span class="d-sm-none d-lg-inline-block"></span></a>
           <div class="dropdown-menu dropdown-menu-right pullDown">
-            <a href="locale/en" class="dropdown-item has-icon" id="lang-en"> <img class="img-fluid" src="assets/bundles/flag-icon-css/flags/4x3/gb.svg" alt="United Kingdom Flag" style="width: 30px; height:30px">&nbsp;Anglais
-           <a href="locale/fr" class="dropdown-item has-icon" id="lang-fr"> <img class="img-fluid" src="assets/bundles/flag-icon-css/flags/4x3/fr.svg" style="width: 30px; height:30px" alt="France Flag">&nbsp;Francais</a>
+            <a href="{{url('locale/en')}}" class="dropdown-item has-icon" id="lang-en"> <img class="img-fluid" src="{{asset('assets/bundles/flag-icon-css/flags/4x3/gb.svg')}}" alt="United Kingdom Flag" style="width: 30px; height:30px">&nbsp;{{__('main.anglais')}}
+           <a href="{{url('locale/fr')}}" class="dropdown-item has-icon" id="lang-fr"> <img class="img-fluid" src="{{asset('assets/bundles/flag-icon-css/flags/4x3/fr.svg')}}" style="width: 30px; height:30px" alt="France Flag">&nbsp;{{__('main.francais')}}</a>
         </li>
-          <li class="dropdown"><a href="#" data-toggle="dropdown"  class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="assets/img/user.png"
+          <li class="dropdown"><a href="#" data-toggle="dropdown"  class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="{{asset('assets/img/user.png')}}"
                 class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
               <div class="dropdown-title">Hello Sarah Smith</div>
               <a href="profile.html" class="dropdown-item has-icon"> <i class="far
 										fa-user"></i> Profile
-             <a href="#" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>
+             <a href="#" class="dropdown-item has-icon"><i class="material-icons">settings</i>
                 Settings
               </a>
               <div class="dropdown-divider"></div>
@@ -76,61 +76,66 @@
       <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
-            <a href="index.html"> <img alt="image" src="assets/img/logo.png"  class="header-logo" /> <span
+            <a href="index.html"> <img alt="image" src="{{asset('assets/img/logo.png')}}"  class="header-logo" /> <span
                 class="logo-name">Otika</span>
             </a>
           </div>
           <ul class="sidebar-menu">
             <li class="menu-header">Main</li>
             <li class="dropdown">
-              <a href="{{url('/dashboard')}}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+              <a href="{{url('/dashboard')}}" class="nav-link"><span><i class="material-icons">home</i>{{__('main.acceuil')}}</span></a>
             </li>
             <li class="dropdown">
-              <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="command"></i><span>Agenda</span></a>
+              <a href="#" class="menu-toggle nav-link has-dropdown"><i class="material-icons">perm_contact_calendar</i><span>Agenda</span></a>
               <ul class="dropdown-menu">
-                <li><a class="nav-link" href="{{ url ('agenda')}}">Agenda</a></li>
+                <li><a class="nav-link" href="{{ url ('agenda')}}"><i class="fas fa-calendar-alt"></i>{{__('main.agenda')}}</a></li>
               </ul>
             </li>
           </li>
           <li class="dropdown">
-            <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                data-feather="shopping-bag"></i><span>Patients</span></a>
+            <a href="#" class="menu-toggle nav-link has-dropdown">
+              <i class="material-icons">person</i><span>{{__('main.patients')}}</span></a>
             <ul class="dropdown-menu">
-              <li><a class="nav-link" href="{{ url('patient')}}">Patients</a></li>
+              <li><a class="nav-link" href="{{ url('patient')}}">{{__('main.patients')}}</a></li>
             </ul>
           </li>
             {{--  --}}
               <li class="menu-header">Administration</li>
             {{--  --}}
           <li class="dropdown">
-            <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                data-feather="shopping-bag"></i><span>Securite</span></a>
+            <a href="#" class="menu-toggle nav-link has-dropdown"><i class="material-icons">security</i>
+              <span>{{__('main.securite')}}</span></a>
             <ul class="dropdown-menu">
-              <li><a class="nav-link" href="{{ url ('GroupeUtilisateur')}}">Groupe Utilisateur</a></li>
-              <li><a class="nav-link" href="{{ url ('Utilisateur')}}"> Utilisateur</a></li>
-              <li><a class="nav-link" href="{{ url ('/')}}"> Historique</a></li>
+              <li><a class="nav-link" href="{{ url ('GroupeUtilisateur')}}"><i class="material-icons">group</i>{{__('main.GroupeUtilisateur')}}</a></li>
+              <li><a class="nav-link" href="{{ url ('Utilisateur')}}"><i class="material-icons">person</i> {{__('main.utilisateur')}}</a></li>
+              <li><a class="nav-link" href="{{ url ('/')}}"><i class="material-icons">history</i>{{__('main.historique')}}</a></li>
 
 
             </ul>
           </li>
           <li class="dropdown">
             <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                data-feather="shopping-bag"></i><span>Configuration</span></a>
+                data-feather="shopping-bag"></i><span>{{__('main.configuration')}}</span></a>
             <ul class="dropdown-menu">
-              <li><a class="nav-link" href="{{ url ('entites')}}">Entites</a></li>
-              <li><a class="nav-link" href="{{ url ('classement')}}">Plan de Classement</a></li>
+              <li><a class="nav-link" href="{{ url ('entites')}}">{{__('main.entites')}}</a></li>
+              <li><a class="nav-link" href="{{ url ('classement')}}"><i class="material-icons">equalizer</i>{{__('main.PlandeClassement')}}</a></li>
 
             </ul>
           </li>
           <li class="dropdown">
-            <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                data-feather="shopping-bag"></i><span>Parametres</span></a>
+            <a href="#" class="menu-toggle nav-link has-dropdown">
+              <span><i class="material-icons">settings</i>{{__('main.parametres')}}</span></a>
             <ul class="dropdown-menu">
-              <li><a class="nav-link" href="{{ url ('entites')}}">Langue</a></li>
-              <li><a class="nav-link" href="{{ url ('passwords')}}">Mot de passe par defaut</a></li>
+              <li><a class="nav-link" href="{{ url ('entites')}}"><i class="material-icons">language</i>{{__('main.langue')}}</a></li>
+              <li><a class="nav-link" href="{{ url ('passwords')}}">{{__('main.MotPasseDefaut')}}</a></li>
 
             </ul>
-          </li>          
+          </li>
+            <li class="menu-header">Maps</li>
+            <li>
+              <a class="nav-link" href="{{url('/settings')}}"><i class="material-icons">settings</i><span>Settings</span></a>
+            </li>
+                    
         </aside>
       </div>
       <!-- Main Content -->
@@ -235,7 +240,7 @@
       </div>
       <footer class="main-footer">
         <div class="footer-left">
-          <a href="templateshub.net">Templateshub</a></a>
+          <a href="#">Kairos &copy; Copyright</a></a>
         </div>
         <div class="footer-right">
         </div>
@@ -256,24 +261,7 @@
     {{-- Ajouter les liens --}}
     @yield('FootLink')
     {{--  --}}
-    <script>
-          $(document).ready(function() {
-              $("#lang-en").click(function(e) {
-                  e.preventDefault(); // Empêcher la navigation par défaut
-                  // Mettre à jour l'icône (remplacez l'URL de l'icône si nécessaire)
-                  window.location.href= "locale/en";
-                  $(".user-icon").attr("src", "assets/bundles/flag-icon-css/flags/4x3/gb.svg");
-              });
-          
-              $("#lang-fr").click(function(e) {
-                  e.preventDefault(); // Empêcher la navigation par défaut
-                  // Mettre à jour l'icône (remplacez l'URL de l'icône si nécessaire)
-                  $(".user-icon").attr("src", "assets/bundles/flag-icon-css/flags/4x3/fr.svg");
-                  window.location.href= "locale/fr";  
-              });
-          });
-      </script>
-      
+    `
 
 </body>
 

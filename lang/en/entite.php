@@ -4,7 +4,7 @@
 
         'titrePage' => 'The entities',
         'organisation' => 'organization',
-        'btnAjout' => 'add an entity', 
+        'btnAjout' => 'add a new entity', 
         'btnEditer' => 'Edit',
         'btnDelete' => 'delete',
         'OrganisationParent' => 'parent organization',

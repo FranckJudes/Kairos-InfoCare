@@ -11,15 +11,12 @@
                     <div class="col-12">
                       <div class="card">
                         <div class="card-header">
-                          <h4>Les Patients</h4>
+                          <h4>{{__('patient.patients')}}</h4>
+                          <div class="card-header-action">
+                            <a href="{{route('patient.create')}}" class="btn btn-success">
+                              {{__('patient.CreerUnPatient')}}</a>
+                          </div>
                         </div>
-                            <div>
-                              <div class="card-body">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                  Ajouter Un Patients</button>
-                              </div>
-                            </div>
-
                         <div class="card-body">
                           <div class="table-responsive">
                             <table class="table table-striped" id="table-2">
@@ -64,7 +61,7 @@
                                 @empty
                                    <tr>
                                     <td colspan="7" class="align-middle" style="text-align: center">
-                                          Pas de patients
+                                          {{__('patient.pasPatient')}}
                                     </td>
                                    </tr>
                                 @endforelse

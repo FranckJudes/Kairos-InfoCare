@@ -23,7 +23,9 @@ class PatientController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.Patients.create',[
+            'Patients' => new Patients
+        ]);
     }
 
     /**
@@ -52,15 +54,18 @@ class PatientController extends Controller
      */
     public function show(Patients $patients)
     {
-        //
+        
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Patients $patients)
+    public function edit($patients)
     {       
-        //
+        $Patients =  Patients::find($patients);
+        return view('admin.Patients.create',[
+            'Patients' => $patients
+        ]);
     }
 
     /**
