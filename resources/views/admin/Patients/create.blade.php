@@ -15,6 +15,8 @@
                             <h4>@yield('title')</h4>
                           </div>
                           <div class="card-body">
+                        <form action="{{ route('patient.store')}}" method="POST">
+                            @csrf
                             <div id="accordion">
                               <div class="accordion">
                                 <div class="accordion-header" style="border: 1px solid black;" role="button" data-toggle="collapse" data-target="#panel-body-1"
@@ -26,8 +28,8 @@
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="form-group">
                                                 <label name="name" >{{__('patient.titrePatient')}}</label>
-                                                <select class="form-control form-control-sm" name="sexe">
-                                                    <option value="">Non Attribué</option>
+                                                <select class="form-control form-control-sm" name="titrePatient">
+                                                    <option value="Non Attribué">Non Attribué</option>
                                                     <option value="Mr.">M.</option>
                                                     <option value="Mrs.">Mme.</option>
                                                     <option value="Ms.">Mlle.</option>
@@ -42,7 +44,7 @@
     
                                             <div class="form-group">
                                                 <label name="name" >{{__('utilisateur.nom')}}</label>
-                                                <input type="text" name="name"  placeholder="nom" id="name" class="form-control">
+                                                <input type="text" name="name" value="{{old('name')}}"  placeholder="nom" id="name" class="form-control">
                                                 @if ($errors->has('name'))
                                                     <span class="text-danger">{{ $errors->first('name') }}</span>
                                                 @endif
@@ -50,7 +52,7 @@
             
                                             <div class="form-group">
                                                 <label name="lastname">{{__('utilisateur.prenom')}}</label>
-                                                <input type="text" class="form-control"   placeholder="Prenom"
+                                                <input type="text" class="form-control"  value="{{old('lastname')}}" placeholder="Prenom"
                                                     name="lastname" id="lastname"> 
                                                 @if ($errors->has('lastname'))
                                                     <span class="text-danger">{{ $errors->first('lastname') }}</span>
@@ -69,7 +71,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label name="dateNaissance">{{__('utilisateur.dateNaissance')}}</label>
-                                                <input type="date" class="form-control"   placeholder="carte d'identite"
+                                                <input type="date" class="form-control"  value="{{old('dateNaissance')}}" placeholder="carte d'identite"
                                                         name="dateNaissance" id="dateNaissance">
                                                 @if ($errors->has('dateNaissance'))
                                                     <span class="text-danger">{{ $errors->first('dateNaissance') }}</span>
@@ -79,45 +81,45 @@
                                         <div class="col-lg-6 col-sm-6">
                                           <div class="form-group">
                                               <label name="CNI">{{__('utilisateur.cni')}}</label>
-                                              <input type="text" class="form-control"   placeholder="carte d'identite"
+                                              <input type="text" class="form-control"  value="{{old('cni')}}" placeholder="carte d'identite"
                                                   name="cni" id="cni"> 
                                               @if ($errors->has('cni'))
                                                   <span class="text-danger">{{ $errors->first('cni') }}</span>
                                               @endif
                                           </div>
                                           <div class="form-group">
-                                            <label name="telephone">{{__('utilisateur.telephone')}}</label>
-                                            <input type="tel" min="0" class="form-control"  pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" placeholder="N_Tel"
-                                                name="telephone" id="telephone"> 
-                                            @if ($errors->has('telephone'))
-                                                <span class="text-danger">{{ $errors->first('telephone') }}</span>
-                                            @endif
-                                        </div>
+                                                <label name="telephone">{{__('utilisateur.telephone')}}</label>
+                                                <input type="tel" min="0" class="form-control" value="{{old('numeroTelephone')}}" pattern="^\+(?:[0-9] ?){6,14}[0-9]$" placeholder="N_Tel"
+                                                    name="numeroTelephone" id="telephone"> 
+                                                @if ($errors->has('numeroTelephone'))
+                                                    <span class="text-danger">{{ $errors->first('numeroTelephone') }}</span>
+                                                @endif
+                                            </div>
                                         <div class="form-group">
                                             <label name="telephone">Identité de genre :</label>
                                             <select class="form-control" name="IdentiteGenre" id="">
-                                                <option value="">Non Attributé</option>
-                                                <option value="446151000124109">S'identifie comme étant un homme</option>
-                                                <option value="446141000124107">S'identifie comme étant une femme</option>
-                                                <option value="407377005">Femme à homme (FTM)/Homme transgenre/Homme trans</option>
-                                                <option value="407376001">Homme à femme (MTF)/Femme transgenre/Femme trans</option>
-                                                <option value="ASKU">Choisit de ne pas divulguer</option>
+                                                <option value="Non Attributé">Non Attributé</option>
+                                                <option value="S'identifie comme étant un homme">S'identifie comme étant un homme</option>
+                                                <option value="S'identifie comme étant une femme">S'identifie comme étant une femme</option>
+                                                <option value="Femme à homme (FTM)/Homme transgenre/Homme trans">Femme à homme (FTM)/Homme transgenre/Homme trans</option>
+                                                <option value="Homme à femme (MTF)/Femme transgenre/Femme trans">Homme à femme (MTF)/Femme transgenre/Femme trans</option>
+                                                <option value="Choisit de ne pas divulguer">Choisit de ne pas divulguer</option>
                                             </select>
-                                            @if ($errors->has('telephone'))
-                                                <span class="text-danger">{{ $errors->first('telephone') }}</span>
+                                            @if ($errors->has('IdentiteGenre'))
+                                                <span class="text-danger">{{ $errors->first('IdentiteGenre') }}</span>
                                             @endif
                                         </div>
                                         <div class="form-group">
                                             <label name="telephone">Orientation Sexuel:</label>
-                                                <select name="" class="form-control" id="">
+                                                <select name="OrientationSexuel" class="form-control" id="">
                                                     <option value="">Non Attributé</option><option value="20430005">Hétéro ou hétérosexuel</option>
-                                                    <option value="38628009">Lesbiennes, gays ou homosexuels</option>
-                                                    <option value="42035005">Bisexuel</option>
-                                                    <option value="UNK">Ne sait pas</option>
-                                                    <option value="ASKU">Choisissez de ne pas divulguer</option>
+                                                    <option value="Lesbiennes, gays ou homosexuels">Lesbiennes, gays ou homosexuels</option>
+                                                    <option value="Bisexuel">Bisexuel</option>
+                                                    <option value="Ne sait pas">Ne sait pas</option>
+                                                    <option value="Choisissez de ne pas divulguer">Choisissez de ne pas divulguer</option>
                                                 </select>
-                                            @if ($errors->has('telephone'))
-                                                <span class="text-danger">{{ $errors->first('telephone') }}</span>
+                                            @if ($errors->has('OrientationSexuel'))
+                                                <span class="text-danger">{{ $errors->first('OrientationSexuel') }}</span>
                                             @endif
                                         </div>
                                     </div>
@@ -160,6 +162,7 @@
                                                 <div class="form-group">
                                                     <label name="region" >{{__('patient.region')}}</label>
                                                     <select class="form-control" name="region">
+                                                        <option value="null">Chosir la Region du Patient</option>
                                                         <option value="Centre">Centre</option>
                                                         <option value="Littoral">Littoral</option>
                                                         <option value="Ouest">Ouest</option>
@@ -187,7 +190,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label name="TelephoneProfessionel">{{__('patient.TelephoneProfessionel')}}</label>
-                                                    <input type="tel" class="form-control" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}"   placeholder="Prenom"
+                                                    <input type="tel" class="form-control" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}"   placeholder="Telehone Professionel"
                                                         name="TelephoneProfessionel" id="lastname"> 
                                                     @if ($errors->has('TelephoneProfessionel'))
                                                         <span class="text-danger">{{ $errors->first('TelephoneProfessionel') }}</span>
@@ -202,9 +205,79 @@
                                                     @endif
                                                 </div>
                                             </div>
-                                </div>
+                                        </div>
                                 </div>
                               </div>
+                              <div class="accordion">
+                                <div class="accordion-header"  style="border: 1px solid black;" role="button" data-toggle="collapse" data-target="#panel-body-9">
+                                  <h4>{{__('patient.InformationMedical')}}</h4>
+                                </div>
+                                <div class="accordion-body collapse" id="panel-body-9" data-parent="#accordion">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label name="AntecedentMedicaux">{{__('patient.AntecedentMedicaux')}}</label>
+                                                <input type="text" class="form-control"   placeholder="Antecedent medical"
+                                                    name="AntecedentMedicaux" id="lastname"> 
+                                                @if ($errors->has('AntecedentMedicaux'))
+                                                    <span class="text-danger">{{ $errors->first('AntecedentMedicaux') }}</span>
+                                                @endif
+                                            </div>
+                                            <div class="form-group">
+                                                <label name="allergie">{{__('patient.allergie')}}</label>
+                                                <input type="text" class="form-control"   placeholder="details Assurance"
+                                                    name="allergie" id="lastname"> 
+                                                @if ($errors->has('allergie'))
+                                                    <span class="text-danger">{{ $errors->first('allergie') }}</span>
+                                                @endif
+                                            </div>
+                                            <div class="form-group">
+                                                <label name="chirugieAnterieurs">{{__('patient.chirugieAnterieurs')}}</label>
+                                                <input type="text" class="form-control"   placeholder="details Assurance"
+                                                    name="chirugieAnterieurs" id="lastname"> 
+                                                @if ($errors->has('allergie'))
+                                                    <span class="text-danger">{{ $errors->first('chirugieAnterieurs') }}</span>
+                                                @endif
+                                            </div>
+                                        
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label name="MedicamentsActuel">{{__('patient.MedicamentsActuel')}}</label>
+                                                <input type="text" name="MedicamentsActuel"  id="name" class="form-control">
+                                                @if ($errors->has('MedicamentsActuel'))
+                                                    <span class="text-danger">{{ $errors->first('MedicamentsActuel') }}</span>
+                                                @endif
+                                            </div>
+                                            <div class="form-group">
+                                                <label name="ProblemeSante">{{__('patient.ProblemeSante')}}</label>
+                                                <input type="text" class="form-control"   placeholder="Coordonnee Assurance"
+                                                    name="ProblemeSante" id="lastname"> 
+                                                @if ($errors->has('ProblemeSante'))
+                                                    <span class="text-danger">{{ $errors->first('ProblemeSante') }}</span>
+                                                @endif
+                                            </div>
+                                            <div class="form-group">
+                                                <label name="HistoriqueVaccination">{{__('patient.HistoriqueVaccination')}}</label>
+                                                <input type="text" name="HistoriqueVaccination"  id="name" class="form-control">
+                                                @if ($errors->has('HistoriqueVaccination'))
+                                                    <span class="text-danger">{{ $errors->first('HistoriqueVaccination') }}</span>
+                                                @endif
+                                            </div>
+                                            <div class="form-group">
+                                                <label name="resultatTestMedicaux">{{__('patient.resultatTestMedicaux')}}</label>
+                                                <input type="text" class="form-control"   placeholder="Coordonnee Assurance"
+                                                    name="resultatTestMedicaux" id="lastname"> 
+                                                @if ($errors->has('resultatTestMedicaux'))
+                                                    <span class="text-danger">{{ $errors->first('resultatTestMedicaux') }}</span>
+                                                @endif
+                                            </div>
+                                        
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                               <div class="accordion">
                                 <div class="accordion-header"  role="button" style="border: 1px solid black;" data-toggle="collapse" data-target="#panel-body-3">
                                   <h4>Choix</h4>
@@ -220,11 +293,10 @@
                                                 @endif
                                             </div>
                                             <div class="form-group">
-                                                <label name="codePostal">???</label>
-                                                <input type="text" class="form-control"   placeholder="Prenom"
-                                                    name="codePostal" id="lastname"> 
-                                                @if ($errors->has('codePostal'))
-                                                    <span class="text-danger">{{ $errors->first('codePostal') }}</span>
+                                                <label name="contactEmployeur">Contact de L'employeur</label>
+                                                <input type="text" class="form-control"   placeholder="Prenom" name="contactEmployeur" id="lastname"> 
+                                                @if ($errors->has('contactEmployeur'))
+                                                    <span class="text-danger">{{ $errors->first('contactEmployeur') }}</span>
                                                 @endif
                                             </div>
                                             <div class="form-group">
@@ -281,11 +353,10 @@
                                                 @endif
                                             </div>
                                             <div class="form-group">
-                                                <label name="codePostal">???</label>
-                                                <input type="text" class="form-control"   placeholder="Prenom"
-                                                    name="codePostal" id="lastname"> 
-                                                @if ($errors->has('codePostal'))
-                                                    <span class="text-danger">{{ $errors->first('codePostal') }}</span>
+                                                <label name="contactEmployeur">Contact de L'employeur</label>
+                                                <input type="text" class="form-control"   placeholder="Prenom" name="contactEmployeur" id="lastname"> 
+                                                @if ($errors->has('contactEmployeur'))
+                                                    <span class="text-danger">{{ $errors->first('contactEmployeur') }}</span>
                                                 @endif
                                             </div>
                                             <div class="form-group">
@@ -416,7 +487,7 @@
                                       
                                 </div>
                               
-                        </div>
+                            </div>
                             </div>
                             <div class="accordion">
                                 <div class="accordion-header" style="border: 1px solid black;" role="button" data-toggle="collapse" data-target="#panel-body-7">
@@ -435,6 +506,7 @@
                                             <div class="form-group">
                                                 <label name="lienParent" >{{__('patient.lienParent')}}</label>
                                                 <select name="LienParent" class="form-control" id="">
+                                                    <option value="null">Choisit un element</option>
                                                     <option value="frere">Frère</option>
                                                     <option value="soignant">Soignant</option>
                                                     <option value="enfant">Enfant</option>
@@ -474,9 +546,9 @@
                                             <div class="form-group">
                                                 <label name="sexe">{{__('patient.sexe')}}</label>
                                                 <select name="sexeParente" class="form-control" id="">
+                                                    <option value="null">Inconnu</option>
                                                     <option value="masculin">Masculin</option>
                                                     <option value="feminin">Feminin</option>
-                                                    <option value="inconnu">Inconnu</option>
                                                 </select>
                                                 @if ($errors->has('sexe'))
                                                     <span class="text-danger">{{ $errors->first('sexe') }}</span>
@@ -495,7 +567,7 @@
                                         <div class="col-lg-6 col-sm-6">
                                             <div class="form-group">
                                                 <label name="codePostal">{{__('patient.TelephoneProfessionel')}}</label>
-                                                <input type="tel" class="form-control"    pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" placeholder="Telephone professionel"
+                                                <input type="tel" class="form-control"    pattern="^(6\d|2\d)\s\d{2}\s\d{2}\s\d{2}$" placeholder="Telephone professionel"
                                                     name="TelephoneProfessionelLienParente" id="codePostal">
                                                 @if ($errors->has('TelephoneProfessionelLienParente'))
                                                     <span class="text-danger">{{ $errors->first('TelephoneProfessionelLienParente') }}</span>
@@ -537,67 +609,60 @@
                                     <div class="row">
                                         <div class="col-lg-6 col-sm-6">
                                             <div class="form-group">
-                                                <label name="nomEmployeur">Nom de L'employeur</label>
-                                                <input type="text" name="nomEmployeur"  placeholder="Nom de L'employeur" id="name" class="form-control">
+                                                <label name="nomEmployeur">{{__('patient.nomCompagnieAssurance')}}</label>
+                                                <input type="text" name="nomEmployeur"  placeholder="Nom de l'assurance" id="name" class="form-control">
                                                 @if ($errors->has('nomEmployeur'))
                                                     <span class="text-danger">{{ $errors->first('nomEmployeur') }}</span>
                                                 @endif
                                             </div>
                                             <div class="form-group">
-                                                <label name="codePostal">???</label>
-                                                <input type="text" class="form-control"   placeholder="Prenom"
-                                                    name="codePostal" id="lastname"> 
-                                                @if ($errors->has('codePostal'))
-                                                    <span class="text-danger">{{ $errors->first('codePostal') }}</span>
+                                                <label name="numeroPoliceAssurance">{{__('patient.numeroPoliceAssurance')}}</label>
+                                                <input type="text" class="form-control"   placeholder="Numero Police Assurance"
+                                                    name="numeroPoliceAssurance" id="lastname"> 
+                                                @if ($errors->has('numeroPoliceAssurance'))
+                                                    <span class="text-danger">{{ $errors->first('numeroPoliceAssurance') }}</span>
                                                 @endif
                                             </div>
                                             <div class="form-group">
-                                                <label name="codePostal">???</label>
-                                                <input type="text" class="form-control"   placeholder="Prenom"
-                                                    name="codePostal" id="lastname"> 
-                                                @if ($errors->has('codePostal'))
-                                                    <span class="text-danger">{{ $errors->first('codePostal') }}</span>
+                                                <label name="detailAssuranceMedicale">{{__('patient.detailAssuranceMedicale')}}</label>
+                                                <input type="text" class="form-control"   placeholder="details Assurance"
+                                                    name="detailAssuranceMedicale" id="lastname"> 
+                                                @if ($errors->has('detailAssuranceMedicale'))
+                                                    <span class="text-danger">{{ $errors->first('detailAssuranceMedicale') }}</span>
                                                 @endif
                                             </div>
                                         
                                         </div>
                                         <div class="col-lg-6 col-sm-6">
                                             <div class="form-group">
-                                                <label name="nomEmployeur">Nom de L'employeur</label>
-                                                <input type="text" name="nomEmployeur"  placeholder="Nom de L'employeur" id="name" class="form-control">
-                                                @if ($errors->has('nomEmployeur'))
-                                                    <span class="text-danger">{{ $errors->first('nomEmployeur') }}</span>
+                                                <label name="dateExpirationAssurance">{{__('patient.dateExpirationAssurance')}}</label>
+                                                <input type="date" name="dateExpirationAssurance"  id="name" class="form-control">
+                                                @if ($errors->has('dateExpirationAssurance'))
+                                                    <span class="text-danger">{{ $errors->first('dateExpirationAssurance') }}</span>
                                                 @endif
                                             </div>
                                             <div class="form-group">
-                                                <label name="codePostal">???</label>
-                                                <input type="text" class="form-control"   placeholder="Prenom"
-                                                    name="codePostal" id="lastname"> 
-                                                @if ($errors->has('codePostal'))
-                                                    <span class="text-danger">{{ $errors->first('codePostal') }}</span>
+                                                <label name="coordonneAssurance">{{__('patient.coordonneAssurance')}}</label>
+                                                <input type="text" class="form-control"   placeholder="Coordonnee Assurance"
+                                                    name="coordonneAssurance" id="lastname"> 
+                                                @if ($errors->has('coordonneAssurance'))
+                                                    <span class="text-danger">{{ $errors->first('coordonneAssurance') }}</span>
                                                 @endif
                                             </div>
-                                            <div class="form-group">
-                                                <label name="codePostal">???</label>
-                                                <input type="text" class="form-control"   placeholder="Prenom"
-                                                    name="codePostal" id="lastname"> 
-                                                @if ($errors->has('codePostal'))
-                                                    <span class="text-danger">{{ $errors->first('codePostal') }}</span>
-                                                @endif
                                             </div>
-                                        
-                                        </div>
                                     </div>
                                 </div>
                             </div>
 
+                         
                             <div class="accordion">
-                                <button value="Enregistrer" style="width: 100%" class="btn btn-success m-t-15 waves-effect">save</button>                                </div>
-                                
+                                <input type="submit" value="{{__('utilisateur.enregister')}}" style="width: 100%" class="btn btn-success m-t-15 waves-effect">   
+                            </div>
                             </div>
                             <div>
                             </div>
                           </div>
+                        </form>
                         </div>
                       </div>
                     </div>

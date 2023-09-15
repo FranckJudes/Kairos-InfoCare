@@ -88,7 +88,7 @@
             <li class="dropdown">
               <a href="#" class="menu-toggle nav-link has-dropdown"><i class="material-icons">perm_contact_calendar</i><span>Agenda</span></a>
               <ul class="dropdown-menu">
-                <li><a class="nav-link" href="{{ url ('agenda')}}"><i class="fas fa-calendar-alt"></i>{{__('main.agenda')}}</a></li>
+                <li><a class="nav-link" href="{{ url('agenda')}}"><i class="fas fa-calendar-alt"></i>{{__('main.agenda')}}</a></li>
               </ul>
             </li>
           </li>
@@ -122,18 +122,9 @@
 
             </ul>
           </li>
-          <li class="dropdown">
-            <a href="#" class="menu-toggle nav-link has-dropdown">
-              <span><i class="material-icons">settings</i>{{__('main.parametres')}}</span></a>
-            <ul class="dropdown-menu">
-              <li><a class="nav-link" href="{{ url ('entites')}}"><i class="material-icons">language</i>{{__('main.langue')}}</a></li>
-              <li><a class="nav-link" href="{{ url ('passwords')}}">{{__('main.MotPasseDefaut')}}</a></li>
-
-            </ul>
-          </li>
-            <li class="menu-header">Maps</li>
+            <li class="menu-header">{{__('main.parametres')}}</li>
             <li>
-              <a class="nav-link" href="{{url('/settings')}}"><i class="material-icons">settings</i><span>Settings</span></a>
+              <a class="nav-link" href="{{url('/settings')}}"><i class="material-icons">settings</i><span>{{__('main.parametres')}} </span></a>
             </li>
                     
         </aside>

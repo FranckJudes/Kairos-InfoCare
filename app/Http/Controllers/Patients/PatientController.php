@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestPatient;
 use App\Models\Patients;
 use Illuminate\Http\Request;
-
+use Brian2694\Toastr\Facades\Toastr;
 class PatientController extends Controller
 {
     /**
@@ -31,21 +31,62 @@ class PatientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(RequestPatient $request)
+    public function store(Request $request)
     {
-        $credentials =  $request->validated();
-        //
         // dd($request);
-        // $patient = new Patients;
-        // $patient->nomPrenoms = $request->nomPrenoms;
-        // $patient->dateNaissance = $request->dateNaissance;
-        // $patient->sexe =  $request->sexe;
-        // $patient-> adresseMail =  $request->adresseMail;
-        // $patient->numeroTelephone =  $request->numeroTelephone;
-        // $patient->quartier =  $request->quartier;
+        // $credentials =  $request->validated();
+        //
+        //  dd($request);
+        $patient = new Patients;
+        $patient->titrePatient = $request->titrePatient;
+        $patient->name = $request->name;
+        $patient->lastname =  $request->lastname;
+        $patient->dateNaissance =  $request->dateNaissance;
+        $patient->sexe =  $request->sexe;
+        $patient->cni =  $request->cni;
+        $patient->numeroTelephone =  $request->numeroTelephone;
+        $patient->IdentiteGenre =  $request->IdentiteGenre;
+        $patient->OrientationSexuel =  $request->OrientationSexuel;
+        $patient->adresse =  $request->adresse;
+        $patient->codePostal =  $request->codePostal;
+        $patient->nomMere =  $request->nomMere;
+        $patient->region =  $request->region;
+        $patient->TelephoneUrgence =  $request->TelephoneUrgence;
+        $patient->TelephoneProfessionel =  $request->TelephoneProfessionel;
 
-        // $patient->save();
+        $patient->emailDuContact = $request->emailDuContact;
+        $patient->AntecedentMedicaux = $request->AntecedentMedicaux;
+        $patient->allergie =  $request->allergie;
+        $patient->chirugieAnterieurs =  $request->chirugieAnterieurs;
+        $patient->MedicamentsActuel =  $request->MedicamentsActuel;
+        $patient->ProblemeSante =  $request->ProblemeSante;
+        $patient->HistoriqueVaccination =  $request->HistoriqueVaccination;
+        $patient->resultatTestMedicaux =  $request->resultatTestMedicaux;
+        $patient->nomEmployeur =  $request->nomEmployeur;
+        $patient->dateDeces =  $request->dateDeces;
+        $patient->raisonDeces =  $request->raisonDeces;
+        $patient->nomGuardian =  $request->nomGuardian;
+        $patient->LienParent =  $request->LienParent;
+        $patient->sexeParente =  $request->sexeParente;
+
+        $patient->AdresseLienParente = $request->AdresseLienParente;
+        $patient->TelephoneProfessionelLienParente = $request->TelephoneProfessionelLienParente;
+        $patient->CourrielLienParente =  $request->CourrielLienParente;
+        $patient->villeLienParente =  $request->villeLienParente;
+        $patient->codePostalLienParente =  $request->codePostalLienParente;
+        $patient->numeroPoliceAssurance =  $request->numeroPoliceAssurance;
+        $patient->detailAssuranceMedicale =  $request->detailAssuranceMedicale;
+        $patient->dateExpirationAssurance =  $request->dateExpirationAssurance;
+        $patient->coordonneAssurance =  $request->coordonneAssurance;
+
+
+        Toastr::success('Mise a jour reussi', 'Succès');
+        $patient->save();
         
+
+        return view('admin.Patients.index',[
+            'patients' => Patients::all()
+        ]);
        
     }
 

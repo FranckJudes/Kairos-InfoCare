@@ -10,6 +10,10 @@
                 <div class="card">
                   <div class="card-header">
                     <h4>{{__('passwords.titre')}}</h4>
+                    <div class="card-header-action">
+                      <a href="{{url()->previous()}}" class="btn btn-success">
+                       <i class="fas fa-arrow-circle-left"></i> {{__('main.retour')}}</a>
+                    </div>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">

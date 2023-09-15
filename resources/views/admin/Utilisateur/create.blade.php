@@ -14,6 +14,7 @@
           <div class="card-content">
               <div class="card-header">
                   <h5 class="card-title" id="formModal">@yield('title')</h5>
+                
               </div>
               <div class="card-body">
                   <form method="POST" action="{{ route($Utilisateur->exists ? 'Utilisateur.update' : 'Utilisateur.store', $Utilisateur->id)}}"  enctype="multipart/form-data">
@@ -142,7 +143,7 @@
                     @endif
                   </form>
               </div>
-          </div>
+          </div>  
       </div>
   </div>
   </section>

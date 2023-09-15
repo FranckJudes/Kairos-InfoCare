@@ -5,7 +5,7 @@ namespace App\Http\Controllers\PasswordDefaut;
 use App\Http\Controllers\Controller;
 use App\Models\Passwords;
 use Illuminate\Http\Request;
-
+use Brian2694\Toastr\Facades\Toastr;
 class PasswordController extends Controller
 {
     /**
@@ -83,9 +83,10 @@ class PasswordController extends Controller
 
          $password->valeur = $request->valeur;
 
-         return view('admin.Passwords.index',[
+         Toastr::success('Mise a jour reussi', 'Succès');
+         return view('admin.Passwords.index',[  
             'Passwords' => Passwords::all()
-        ]); 
+        ]);
          
     }
 

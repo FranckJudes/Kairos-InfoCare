@@ -36,4 +36,23 @@
 
         // Assurance
         'assurance' => 'Insurance',
+        'nomCompagnieAssurance' => 'Insurance company name',
+        'numeroPoliceAssurance' => 'Insurance policy number',
+        'detailAssuranceMedicale' => 'Medical Insurance Details',
+        'dateExpirationAssurance' => 'Insurance expiration date',
+        'coordonneAssurance' => 'Insurance details',
+
+
+
+        // Information Medicale
+        'InformationMedical' => 'Medical information',
+        'AntecedentMedicaux' => 'Medical background',
+        'allergie' => 'Allergies',
+        'MedicamentsActuel' => 'Current and past medications',
+        'ProblemeSante' => 'Current and past health problems (diagnoses)',
+        'HistoriqueVaccination' => 'Medical consultation reports',
+        'resultatTestMedicaux' => 'Medical test results (e.g., blood tests, x-rays)',
+        'chirugieAnterieurs' => 'Previous surgeries',
+        'rapportConsultation' => 'Medical consultation reports',
+
     ];

@@ -16,6 +16,7 @@
         'agenda' => 'Calendar',
         'patients' => 'Patients',
         'francais' => 'french',
-        'anglais' => 'english'
+        'anglais' => 'english',
+        'retour' =>  'back',
 
     ];
