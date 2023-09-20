@@ -54,9 +54,9 @@
                                   </td>
                                   <td>
                                     <div>
-                                      <a  href="{{ route('GroupeUtilisateur.show',$groupe)}}" class="btn btn-success" >Voir plus</a>
-                                      <a  href="{{ route('GroupeUtilisateur.edit' , $groupe->id)}}" class="btn btn-primary" >modifier</a>
-                                      <a  class="btn btn-danger" href="{{url('deleteGroupeUtilisateur',$groupe->id)}}">Supprimer</a>
+                                      <a  href="{{ route('GroupeUtilisateur.show',$groupe)}}"  ><i class="material-icons">remove_red_eye</i></a>
+                                      <a  href="{{ route('GroupeUtilisateur.edit' , $groupe->id)}}"  ><i class="material-icons">mode_edit</i></a>
+                                      <a  href="{{url('deleteGroupeUtilisateur',$groupe->id)}}"><i class="material-icons">delete</i></a>
                                     </div>   
                                   </td>
                                 </tr>   

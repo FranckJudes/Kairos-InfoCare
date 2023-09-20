@@ -42,10 +42,10 @@
                         <td>{{$item->dateNaissance}}</td>
                         <td>{{$item->email}}</td>
                         <td>
-                          <a href="">Voir Plus</a>|
+                          <a href=""><i class="material-icons">remove_red_eye</i></a>
                   
-                          <a href="{{url('deleteUtilisateur',$item->id)}}">supprimer</a>| 
-                          <a href="{{ route('Utilisateur.edit' , $item->id)}}">modifier</a>
+                          <a href="{{ route('Utilisateur.edit' , $item->id)}}"><i class="material-icons">mode_edit</i></a>
+                          <a href="{{url('deleteUtilisateur',$item->id)}}"><i class="material-icons">delete</i></a>
 
                         </td>
                       </tr>

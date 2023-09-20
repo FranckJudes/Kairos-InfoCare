@@ -3,7 +3,8 @@
     <link rel="stylesheet" href="{{asset('assets/bundles/select2/dist/css/select2.min.css')}}">
 
     @endsection
-    @section('title', $Patients->exists ? __('patient.UpdatePatient') : __('patient.CreerUnPatient'))
+ 
+@section('title', $patients->exists ?  __('patient.UpdatePatient') : __('patient.CreerUnPatient'))
 
     @section('content')
         <section class="section">
@@ -13,6 +14,10 @@
                         <div class="card">
                           <div class="card-header">
                             <h4>@yield('title')</h4>
+                            <div class="card-header-action">
+                                <a href="{{url()->previous()}}" class="btn btn-success">
+                                 <i class="fas fa-arrow-circle-left"></i> {{__('main.retour')}}</a>
+                              </div>    
                           </div>
                           <div class="card-body">
                         <form action="{{ route('patient.store')}}" method="POST">
@@ -122,6 +127,7 @@
                                                 <span class="text-danger">{{ $errors->first('OrientationSexuel') }}</span>
                                             @endif
                                         </div>
+                                     
                                     </div>
                                 </div>
                             </div>
@@ -202,6 +208,14 @@
                                                         name="emailDuContact" id="lastname"> 
                                                     @if ($errors->has('emailDuContact'))
                                                         <span class="text-danger">{{ $errors->first('emailDuContact') }}</span>
+                                                    @endif
+                                                </div>
+                                                <div class="form-group">
+                                                    <label name="telephone">Quartier du patient</label>
+                                                    <input type="text" class="form-control" placeholder="Quartier du patient"
+                                                        name="quartier" id="telephone"> 
+                                                    @if ($errors->has('quartier'))
+                                                        <span class="text-danger">{{ $errors->first('quartier') }}</span>
                                                     @endif
                                                 </div>
                                             </div>
@@ -353,44 +367,44 @@
                                                 @endif
                                             </div>
                                             <div class="form-group">
-                                                <label name="contactEmployeur">Contact de L'employeur</label>
-                                                <input type="text" class="form-control"   placeholder="Prenom" name="contactEmployeur" id="lastname"> 
-                                                @if ($errors->has('contactEmployeur'))
-                                                    <span class="text-danger">{{ $errors->first('contactEmployeur') }}</span>
+                                                <label name="AdresseEmployeur">Adresse de L'employeur</label>
+                                                <input type="text" class="form-control"   placeholder="Adresse employeur" name="AdresseEmployeur" id="lastname"> 
+                                                @if ($errors->has('AdresseEmployeur'))
+                                                    <span class="text-danger">{{ $errors->first('AdresseEmployeur') }}</span>
                                                 @endif
                                             </div>
                                             <div class="form-group">
-                                                <label name="codePostal">???</label>
-                                                <input type="text" class="form-control"   placeholder="Prenom"
-                                                    name="codePostal" id="lastname"> 
-                                                @if ($errors->has('codePostal'))
-                                                    <span class="text-danger">{{ $errors->first('codePostal') }}</span>
+                                                <label name="ProfessionEmployeur">Profession</label>
+                                                <input type="text" class="form-control"   placeholder="Votre Profession"
+                                                    name="ProfessionEmployeur" id="lastname"> 
+                                                @if ($errors->has('ProfessionEmployeur'))
+                                                    <span class="text-danger">{{ $errors->first('ProfessionEmployeur') }}</span>
                                                 @endif
                                             </div>
                                         
                                         </div>
                                         <div class="col-lg-6 col-sm-6">
                                             <div class="form-group">
-                                                <label name="nomEmployeur">Nom de L'employeur</label>
-                                                <input type="text" name="nomEmployeur"  placeholder="Nom de L'employeur" id="name" class="form-control">
-                                                @if ($errors->has('nomEmployeur'))
-                                                    <span class="text-danger">{{ $errors->first('nomEmployeur') }}</span>
+                                                <label name="VilleEmployeur">Ville</label>
+                                                <input type="text" name="VilleEmployeur"  placeholder="Ville de L'employeur" id="name" class="form-control">
+                                                @if ($errors->has('VilleEmployeur'))
+                                                    <span class="text-danger">{{ $errors->first('VilleEmployeur') }}</span>
                                                 @endif
                                             </div>
                                             <div class="form-group">
-                                                <label name="codePostal">???</label>
-                                                <input type="text" class="form-control"   placeholder="Prenom"
-                                                    name="codePostal" id="lastname"> 
-                                                @if ($errors->has('codePostal'))
-                                                    <span class="text-danger">{{ $errors->first('codePostal') }}</span>
+                                                <label name="PaysEmployeur">Pays</label>
+                                                <input type="text" class="form-control"   placeholder="Pays Employeur"
+                                                    name="PaysEmployeur" id="lastname"> 
+                                                @if ($errors->has('PaysEmployeur'))
+                                                    <span class="text-danger">{{ $errors->first('PaysEmployeur') }}</span>
                                                 @endif
                                             </div>
                                             <div class="form-group">
-                                                <label name="codePostal">???</label>
-                                                <input type="text" class="form-control"   placeholder="Prenom"
-                                                    name="codePostal" id="lastname"> 
-                                                @if ($errors->has('codePostal'))
-                                                    <span class="text-danger">{{ $errors->first('codePostal') }}</span>
+                                                <label name="codePostal">Code Postal</label>
+                                                <input type="text" class="form-control"   placeholder="code Postal"
+                                                    name="codePostalEmployeur" id="lastname"> 
+                                                @if ($errors->has('codePostalEmployeur'))
+                                                    <span class="text-danger">{{ $errors->first('codePostalEmployeur') }}</span>
                                                 @endif
                                             </div>
                                         
@@ -400,61 +414,115 @@
                             </div>
                             <div class="accordion">
                                 <div class="accordion-header" role="button" style="border: 1px solid black;" data-toggle="collapse" data-target="#panel-body-5">
-                                  <h4>Stats</h4>
+                                  <h4>Statistiques</h4>
                                 </div>
                                 <div class="accordion-body collapse" id="panel-body-5" data-parent="#accordion">
                                     <div class="row">
                                         <div class="col-lg-6 col-sm-6">
                                             <div class="form-group">
-                                                <label name="nomEmployeur">Nom de L'employeur</label>
-                                                <input type="text" name="nomEmployeur"  placeholder="Nom de L'employeur" id="name" class="form-control">
-                                                @if ($errors->has('nomEmployeur'))
-                                                    <span class="text-danger">{{ $errors->first('nomEmployeur') }}</span>
+                                                <label name="LangueStat" >Langue</label>
+                                                <select name="LangueStat" class="form-control" id="">
+                                                    <option value="null">Choisit un element</option>
+                                                    <option value="francais">Francais</option>
+                                                    <option value="Anglais">Anglais</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label name="nomEmployeur">Origine Ethnique</label>
+                                                <input type="text" name="OrigineEthnique"  placeholder="Entrez L'origine" id="name" class="form-control">
+                                                @if ($errors->has('OrigineEthnique'))
+                                                    <span class="text-danger">{{ $errors->first('OrigineEthnique') }}</span>
                                                 @endif
                                             </div>
                                             <div class="form-group">
-                                                <label name="codePostal">???</label>
-                                                <input type="text" class="form-control"   placeholder="Prenom"
-                                                    name="codePostal" id="lastname"> 
-                                                @if ($errors->has('codePostal'))
-                                                    <span class="text-danger">{{ $errors->first('codePostal') }}</span>
+                                                <label name="codePostal">Taille de Famille</label>
+                                                <input type="text" class="form-control"   placeholder="taille famille"
+                                                    name="TailleFamille" id="lastname"> 
+                                                @if ($errors->has('TailleFamille'))
+                                                    <span class="text-danger">{{ $errors->first('TailleFamille') }}</span>
                                                 @endif
                                             </div>
                                             <div class="form-group">
-                                                <label name="codePostal">???</label>
-                                                <input type="text" class="form-control"   placeholder="Prenom"
-                                                    name="codePostal" id="lastname"> 
-                                                @if ($errors->has('codePostal'))
-                                                    <span class="text-danger">{{ $errors->first('codePostal') }}</span>
+                                                <label name="codePostal">Source de Reference</label>
+                                                <input type="text" class="form-control"   placeholder="Source reference"
+                                                    name="SourceReference" id="lastname"> 
+                                                @if ($errors->has('SourceReference'))
+                                                    <span class="text-danger">{{ $errors->first('SourceReference') }}</span>
+                                                @endif
+                                            </div>
+                                            <div class="form-group">
+                                                <label name="codePostal">Religion</label>
+                                                <select name="Religion" class="form-control" id="">
+                                                    <option value="null">Choisit un element</option>
+                                                    <option value="Christianisme">Christianisme</option>
+                                                    <option value="Islam">Islam</option>
+                                                    <option value="Bouddhisme">Bouddhisme</option>
+                                                    <option value="Sikhisme">Sikhisme</option>
+                                                    <option value="Bahaïsme">Bahaïsme</option>
+                                                    <option value="autres">autres</option>
+                                                </select>
+                                                @if ($errors->has('Religion'))
+                                                    <span class="text-danger">{{ $errors->first('Religion') }}</span>
                                                 @endif
                                             </div>
                                         
                                         </div>
                                         <div class="col-lg-6 col-sm-6">
                                             <div class="form-group">
-                                                <label name="nomEmployeur">Nom de L'employeur</label>
-                                                <input type="text" name="nomEmployeur"  placeholder="Nom de L'employeur" id="name" class="form-control">
-                                                @if ($errors->has('nomEmployeur'))
-                                                    <span class="text-danger">{{ $errors->first('nomEmployeur') }}</span>
+                                                <label name="nomEmployeur">Course</label>
+                                                <input type="text" name="CourseStatistique"  placeholder="No" id="name" class="form-control">
+                                                @if ($errors->has('CourseStatistique'))
+                                                    <span class="text-danger">{{ $errors->first('CourseStatistique') }}</span>
                                                 @endif
                                             </div>
                                             <div class="form-group">
-                                                <label name="codePostal">???</label>
-                                                <input type="text" class="form-control"   placeholder="Prenom"
-                                                    name="codePostal" id="lastname"> 
-                                                @if ($errors->has('codePostal'))
-                                                    <span class="text-danger">{{ $errors->first('codePostal') }}</span>
+                                                <label name="codePostal">Date de l'examen financier :</label>
+                                                <input type="date" class="form-control"   placeholder="Prenom"
+                                                    name="dateFinancier" id="lastname"> 
+                                                @if ($errors->has('dateFinancier'))
+                                                    <span class="text-danger">{{ $errors->first('dateFinancier') }}</span>
                                                 @endif
                                             </div>
                                             <div class="form-group">
-                                                <label name="codePostal">???</label>
-                                                <input type="text" class="form-control"   placeholder="Prenom"
-                                                    name="codePostal" id="lastname"> 
-                                                @if ($errors->has('codePostal'))
-                                                    <span class="text-danger">{{ $errors->first('codePostal') }}</span>
+                                                <label name="codePostal">
+                                                    Sans-abri, etc. :</label>
+                                                    <select name="SansAbri" class="form-control" id="">
+                                                        <option value="null">Choisit un element</option>
+                                                        <option value="oui">oui</option>
+                                                        <option value="non">non</option>
+                                                    </select>
+                                                @if ($errors->has('SansAbri'))
+                                                    <span class="text-danger">{{ $errors->first('SansAbri') }}</span>
                                                 @endif
                                             </div>
-                                        
+                                            <div class="form-group">
+                                                <label name="codePostal">
+                                                    Migrant/Saisonnier :
+                                                </label>
+                                                    <select name="SansAbri" class="form-control" id="">
+                                                        <option value="null">Choisit un element</option>
+                                                        <option value="oui">oui</option>
+                                                        <option value="non">non</option>
+                                                    </select>
+                                                @if ($errors->has('SansAbri'))
+                                                    <span class="text-danger">{{ $errors->first('SansAbri') }}</span>
+                                                @endif
+                                            </div>
+                                            <div class="form-group">
+                                                <label name="codePostal">
+                                                   VFC :
+                                                </label>
+                                                    <select name="SansAbri" class="form-control" id="">
+                                                        <option value="Non attribue">Non attribue</option>
+                                                        <option value="Admissible">Admissible</option>
+                                                        <option value="ineligible">ineligible</option>
+                                                    </select>
+                                                @if ($errors->has('SansAbri'))
+                                                    <span class="text-danger">{{ $errors->first('SansAbri') }}</span>
+                                                @endif
+                                            </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -609,7 +677,7 @@
                                     <div class="row">
                                         <div class="col-lg-6 col-sm-6">
                                             <div class="form-group">
-                                                <label name="nomEmployeur">{{__('patient.nomCompagnieAssurance')}}</label>
+                                                <label name="nomEmployeur">Fournisseur d’assurance principal</label>
                                                 <input type="text" name="nomEmployeur"  placeholder="Nom de l'assurance" id="name" class="form-control">
                                                 @if ($errors->has('nomEmployeur'))
                                                     <span class="text-danger">{{ $errors->first('nomEmployeur') }}</span>
@@ -631,9 +699,31 @@
                                                     <span class="text-danger">{{ $errors->first('detailAssuranceMedicale') }}</span>
                                                 @endif
                                             </div>
-                                        
-                                        </div>
-                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label name="PaysAssurance">pays</label>
+                                                <input type="text" class="form-control"   placeholder="Pays Assurance"
+                                                    name="PaysAssurance" id="lastname"> 
+                                                @if ($errors->has('PaysAssurance'))
+                                                    <span class="text-danger">{{ $errors->first('PaysAssurance') }}</span>
+                                                @endif
+                                            </div>
+                                            <div class="form-group">
+                                                <label name="PaysAssurance">Code Postal</label>
+                                                <input type="text" class="form-control"   placeholder="code postal Assurance"
+                                                    name="codePostalAssurance" id="lastname"> 
+                                                @if ($errors->has('codePostalAssurance'))
+                                                    <span class="text-danger">{{ $errors->first('codePostalAssurance') }}</span>
+                                                @endif
+                                            </div>
+                                            <div class="form-group">
+                                                <label name="PaysAssurance">Numero de groupe</label>
+                                                <input type="text" class="form-control"   placeholder="Numero groupe Assurance"
+                                                    name="numeroGroupeAssurance" id="lastname"> 
+                                                @if ($errors->has('numeroGroupeAssurance'))
+                                                    <span class="text-danger">{{ $errors->first('numeroGroupeAssurance') }}</span>
+                                                @endif
+                                            </div>
+                                          
                                             <div class="form-group">
                                                 <label name="dateExpirationAssurance">{{__('patient.dateExpirationAssurance')}}</label>
                                                 <input type="date" name="dateExpirationAssurance"  id="name" class="form-control">
@@ -641,6 +731,9 @@
                                                     <span class="text-danger">{{ $errors->first('dateExpirationAssurance') }}</span>
                                                 @endif
                                             </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6">
+                                            
                                             <div class="form-group">
                                                 <label name="coordonneAssurance">{{__('patient.coordonneAssurance')}}</label>
                                                 <input type="text" class="form-control"   placeholder="Coordonnee Assurance"
@@ -649,7 +742,67 @@
                                                     <span class="text-danger">{{ $errors->first('coordonneAssurance') }}</span>
                                                 @endif
                                             </div>
+                                            <div class="form-group">
+                                                <label name="PaysAssurance">Abonnes : </label>
+                                                <input type="text" class="form-control"   placeholder="Nom de l'abonne"
+                                                    name="AbonneAssurance" id="lastname"> 
+                                                @if ($errors->has('AbonneAssurance'))
+                                                    <span class="text-danger">{{ $errors->first('AbonneAssurance') }}</span>
+                                                @endif
                                             </div>
+                                            <div class="form-group">
+                                                <label name="PaysAssurance"> Adresse abonne</label>
+                                                <input type="text" class="form-control"   placeholder="Adresse de l'abonne "
+                                                    name="AdresseAbonne" id="lastname"> 
+                                                @if ($errors->has('AdresseAbonne'))
+                                                    <span class="text-danger">{{ $errors->first('AdresseAbonne') }}</span>
+                                                @endif
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label name="PaysAssurance">date de naissance</label>
+                                                <input type="date" class="form-control"   
+                                                    name="dateNaissanceAbonnee" id="lastname"> 
+                                                @if ($errors->has('dateNaissanceAbonnee'))
+                                                    <span class="text-danger">{{ $errors->first('dateNaissanceAbonnee') }}</span>
+                                                @endif
+                                            </div>
+                                        
+                                            <div class="form-group">
+                                                <label name="PaysAssurance">Relation</label>
+                                                <select name="RelationAbonne" class="form-control" id="">
+                                                    <option value="null">Choisit un element</option>
+                                                    <option value="soi">Soi</option>
+                                                    <option value="conjoint">Conjoint</option>
+                                                    <option value="enfant">Enfant</option>
+                                                    <option value="autres">Autres</option>
+                                                </select>                                                   
+                                                @if ($errors->has('AbonneAssurance'))
+                                                    <span class="text-danger">{{ $errors->first('AbonneAssurance') }}</span>
+                                                @endif
+                                            </div>
+                                            <div class="form-group">
+                                                <label name="coordonneAssurance">Sexe Abonne</label>
+                                                <select name="RelationAbonne" class="form-control" id="">
+                                                    <option value="null">Choisit un element</option>
+                                                    <option value="masculin">masculin</option>
+                                                    <option value="feminin">feminin</option>
+                                                </select> 
+                                                @if ($errors->has('coordonneAssurance'))
+                                                    <span class="text-danger">{{ $errors->first('coordonneAssurance') }}</span>
+                                                @endif
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label name="PaysAssurance">Code Postal Abonne</label>
+                                                <input type="text" class="form-control"   placeholder="code postal Assurance"
+                                                    name="codePostalAssurance" id="lastname"> 
+                                                @if ($errors->has('codePostalAssurance'))
+                                                    <span class="text-danger">{{ $errors->first('codePostalAssurance') }}</span>
+                                                @endif
+                                            </div>
+                                            
+                                        </div>
                                     </div>
                                 </div>
                             </div>

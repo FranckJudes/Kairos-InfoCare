@@ -24,7 +24,7 @@ class PatientController extends Controller
     public function create()
     {
         return view('admin.Patients.create',[
-            'Patients' => new Patients
+            'patients' => new Patients
         ]);
     }
 
@@ -93,8 +93,11 @@ class PatientController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Patients $patients)
+    public function show($patients)
     {
+        return view('admin.Patients.show',[
+            'patients' => Patients::find($patients)
+        ]);
         
     }
 
@@ -103,9 +106,9 @@ class PatientController extends Controller
      */
     public function edit($patients)
     {       
-        $Patients =  Patients::find($patients);
+       
         return view('admin.Patients.create',[
-            'Patients' => $patients
+            'patients' =>Patients::find($patients)
         ]);
     }
 
@@ -129,5 +132,21 @@ class PatientController extends Controller
     public function destroy(Patients $patients)
     {
         $patients->delete();
+    }
+
+    public function delete($id){
+        
+        
+        try {
+            Patients::find($id)->delete();
+            Toastr::success('Suppression avec success', 'Succès');
+            return  view('admin.Patients.index',[
+                'patients' =>  Patients::all()
+            ]);
+            
+        } catch (\Throwable $th) {
+            Toastr::error('Echec de suppression', 'Succès');
+
+        } 
     }
 }

@@ -83,4 +83,5 @@ Route::get('deleteUtilisateur/{id}', [UtilisateurController::class, 'delete']);
 Route::get('deleteGroupeUtilisateur/{id}', [GroupeUtilisateurController::class, 'delete']);
 Route::post('passwordUpdate', [PasswordController::class, 'updatePassword']);
 Route::get('deleteClassement/{id}', [ClassementController::class, 'delete']);
+Route::get('deletePatient/{id}', [PatientController::class, 'delete']);
 
