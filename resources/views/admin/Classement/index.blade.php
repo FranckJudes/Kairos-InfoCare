@@ -124,7 +124,7 @@ aria-hidden="true">
               
                       }  
                   $.ajax({
-                  url: "get-tree",
+                  url: "/get-tree",
                   type: 'GET',
                   dataType: 'json',
   

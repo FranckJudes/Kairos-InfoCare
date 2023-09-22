@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Patients;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestPatient;
 use App\Models\Patients;
+use App\Models\PlanClassement;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 class PatientController extends Controller
@@ -79,7 +80,7 @@ class PatientController extends Controller
         $patient->dateExpirationAssurance =  $request->dateExpirationAssurance;
         $patient->coordonneAssurance =  $request->coordonneAssurance;
 
-
+        $patient->plan_classement_id = 1;
         Toastr::success('Mise a jour reussi', 'Succès');
         $patient->save();
         
@@ -95,8 +96,36 @@ class PatientController extends Controller
      */
     public function show($patients)
     {
+        $customIcons = [
+            'dossier' => asset('/assets/Ztree/css/zTreeStyle/img/diy/folder.png'),
+            'fichier' => asset('/assets/Ztree/css/zTreeStyle/img/diy/2.png'),
+        ];
+        $entites = PlanClassement::all();
+
+        $treeData = [];
+        foreach ($entites as $entite) {
+            if ($entite->type == 'dossier') {
+   
+                $treeData[] = [
+                    'id' => $entite->id,
+                    'pId' => $entite->parent_id,
+                    'name' => $entite->libelle,
+                    'type' => $entite->type,
+                    'icon'=> $customIcons['dossier']
+                ];
+            }else {
+                $treeData[] = [
+                    'id' => $entite->id,
+                    'pId' => $entite->parent_id,
+                    'name' => $entite->libelle,
+                    'type' => $entite->type,
+                    'icon'=> $customIcons['fichier']
+                ];
+            }
+        }
+
         return view('admin.Patients.show',[
-            'patients' => Patients::find($patients)
+            'patients' => Patients::find($patients),
         ]);
         
     }

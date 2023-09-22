@@ -78,6 +78,10 @@ class Patients extends Model
     
     ];
     
+
+
+    
+
     public function classement()
     {
         return $this->belongsTo(PlanClassement::class);

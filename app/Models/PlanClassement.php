@@ -21,6 +21,7 @@ class PlanClassement extends Model
     {
         return $this->hasMany(Patient::class);
     }
+
     public function parent()
     {
         return $this->belongsTo(PlanClassement::class, 'parent_id');

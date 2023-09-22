@@ -47,7 +47,7 @@ class UtilisateurController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+       
         $request = $request->validate([
             'name' => 'required',
             'lastname' => 'required',

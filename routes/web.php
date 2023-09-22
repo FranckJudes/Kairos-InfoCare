@@ -9,6 +9,7 @@ use App\Http\Controllers\Utilisateur\UtilisateurController;
 use App\Http\Controllers\RendezVous\RendezVousController;
 use App\Http\Controllers\Classement\ClassementController;
 use App\Http\Controllers\PasswordDefaut\PasswordController;
+use App\Http\Controllers\PatientFiles\PatientFileController;
 use App\Http\Controllers\Parametres\ParametresController;
 use App\Http\Controllers\Langue\LangageController;
 use Illuminate\Support\Facades\Route;
@@ -75,7 +76,8 @@ Route::resource('rendezVous', RendezVousController::class);
 Route::resource('classement', ClassementController::class);
 //Groupe Mot de passe par Defaut
 Route::resource('passwords', PasswordController::class);
-
+//Groupe Mot de passe par Defaut
+Route::resource('patientFiles', PatientFileController::class);
 
 // Suppression 
 Route::get('deleteEntite/{id}', [EntitesController::class, 'delete']);
