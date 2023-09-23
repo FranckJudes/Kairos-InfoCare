@@ -21,6 +21,8 @@ return new class extends Migration
             $table->enum('type', ['dossier', 'fichier']); 
             $table->timestamps();
         });
+
+      
     }
 
     /**

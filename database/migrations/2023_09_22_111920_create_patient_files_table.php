@@ -20,6 +20,8 @@ return new class extends Migration
             $table->foreignIdFor(PlanClassement::class);        
             $table->foreignIdFor(Patients::class);        
             $table->string('filename');
+            $table->string('filepath');
+
             $table->timestamps();
         });
     }

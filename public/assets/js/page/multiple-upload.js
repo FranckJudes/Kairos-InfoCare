@@ -7,126 +7,111 @@ if (window.Dropzone) {
 
 var dropzone = new Dropzone("#mydropzone", {
         thumbnailWidth:200,
-        maxFilesize:100000,
+        maxFilesize:500,
         acceptedFiles:".pdf",
-
-        // init: function () {
-        //   this.on('success', function (file, response) {
-        //     // Ajouter le fichier au tableau des fichiers
-        //     const fileList = document.getElementById('file-list');
-        //     const newRow = fileList.insertRow();
-        //     const idCell = newRow.insertCell(0);
-        //     const nameCell = newRow.insertCell(1);
-        //     const sizeCell = newRow.insertCell(2);
-        //     const actionsCell = newRow.insertCell(3);
-        //     idCell.innerText = response.id; // Vous pouvez attribuer un ID unique à chaque fichier
-        //     nameCell.innerText = file.name;
-        //     sizeCell.innerText = (file.size / 1024).toFixed(2) + 'Ko'; // Taille du fichier
-
-        //     // Bouton pour visualiser le PDF
-        //     const viewButton = document.createElement('i');
-        //     viewButton.className = 'material-icons view-file';
-        //     viewButton.innerText = 'remove_red_eye';
-        //     viewButton.addEventListener('click', function () {
-        //         // Ajoutez ici le code pour visualiser le PDF
-        //     });
-        //     actionsCell.appendChild(viewButton);
-
-        //     // Bouton pour supprimer le PDF
-        //     const deleteButton = document.createElement('i');
-        //     deleteButton.className = 'material-icons delete-file';
-        //     deleteButton.innerText = 'delete';
-        //     deleteButton.addEventListener('click', function () {
-        //         // Ajoutez ici le code pour supprimer le PDF
-        //         newRow.remove(); // Supprimer la ligne du tableau
-        //     });
-        //     actionsCell.appendChild(deleteButton);
-        // });
-
-        //     dropzone.removeAllFiles();
-        //   }
-
-
         init: function () {
-          this.on('success', function (file, response) {
-              // Obtenir la liste des fichiers
-              const fileList = document.getElementById('file-list');
-   
-              // Créer une nouvelle ligne
-              const newRow = fileList.insertRow();
-              
-              // Colonne #
-              const countCell = newRow.insertCell(0);
-              countCell.innerText = fileList.rows.length - 1; // Numéro de ligne (commence à 1)
-   
-              // Colonne Nom du fichier
-              const nameCell = newRow.insertCell(1);
-              nameCell.innerText = file.name;
-   
-              // Colonne Taille
-              const sizeCell = newRow.insertCell(2);
-              sizeCell.innerText = (file.size / 1024).toFixed(2) + ' KB'; // Afficher la taille en KB
-   
-              // Colonne Actions
-              const actionsCell = newRow.insertCell(3);
-   
-              // Bouton pour visualiser le PDF
-              const viewButton = document.createElement('a');
-              viewButton.href = response.view_url;
-              viewButton.target = '_blank';
-              viewButton.setAttribute('data-toggle', 'modal'); // Utilisez setAttribute
-              viewButton.setAttribute('data-target', '.bd-example-modal-lg'); 
-              viewButton.innerHTML = '<i class="material-icons">remove_red_eye</i>';
-              actionsCell.appendChild(viewButton);
-   
-              // Bouton pour supprimer le PDF
-              const deleteButton = document.createElement('a');
-              deleteButton.href = response.delete_url;
-              deleteButton.innerHTML = '<i class="material-icons">delete</i>';
-              actionsCell.appendChild(deleteButton);
-              // dropzone.removeAllFiles();
+          this.on('addedfile', function (file) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                // Affichez le PDF dans l'iframe
+                var iframe = document.getElementById('pdf-preview');
+                iframe.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+
+        
+        this.on('sending', function (file, xhr, formData) {
+          // Récupérez les données supplémentaires à partir des champs de formulaire
+          var id_planClassement = document.querySelector('input[name="id_planClassement"]').value;
+          var patient_id = document.querySelector('input[name="patients_id"]').value;
+
+          // Ajoutez ces données supplémentaires à la requête
+          formData.append('id_planClassement', id_planClassement);
+          formData.append('patient_id', patient_id);
+
+      });
+
+
+      this.on('success', function (file, response) {
+          // Obtenir la liste des fichiers
+          const fileList = document.getElementById('file-list');
+
+          // Créer une nouvelle ligne
+          const newRow = fileList.insertRow();
+          
+          // Colonne #
+          const countCell = newRow.insertCell(0);
+          countCell.innerText = fileList.rows.length - 1; // Numéro de ligne (commence à 1)
+
+          // Colonne Nom du fichier
+          const nameCell = newRow.insertCell(1);
+          nameCell.innerText = file.name;
+
+          // Colonne Taille
+          const sizeCell = newRow.insertCell(2);
+          sizeCell.innerText = (file.size / 1024).toFixed(2) + ' KB'; // Afficher la taille en KB
+
+          // Colonne Actions
+          const actionsCell = newRow.insertCell(3);
+
+          // Bouton pour visualiser le PDF
+          const viewButton = document.createElement('a');
+          viewButton.href = response.view_url;
+          viewButton.target = '_blank';
+          viewButton.setAttribute('data-toggle', 'modal'); // Utilisez setAttribute
+          viewButton.setAttribute('data-target', '.bd-example-modal-lg'); 
+          viewButton.innerHTML = '<i class="material-icons">remove_red_eye</i>';
+          actionsCell.appendChild(viewButton);
+
+          ///////////////////////////////////////
+          // // // Bouton pour supprimer le PDF
+      
+          //     const deleteButton = document.createElement('i');
+          //     deleteButton.className = 'material-icons delete-file';
+          //     deleteButton.innerText = 'delete';
+          //     deleteButton.addEventListener('click', function () {
+          //         // Ajoutez ici le code pour supprimer le PDF
+          //         newRow.remove(); 
+          //         // Supprimer la ligne du tableau
+                  
+          //     });
+
+
+
+          //     actionsCell.appendChild(deleteButton);
+
+
+
+          // Supprimer//////////////////////////////////////
+
+          const deleteButton = document.createElement('i');
+            deleteButton.className = 'material-icons delete-file';
+            deleteButton.innerText = 'delete';
+            deleteButton.addEventListener('click', function () {
+                if (confirm('Êtes-vous sûr de vouloir supprimer ce fichier ?')) {
+                    const fileId = response.file_id; // Remplacez par l'ID du fichier à supprimer
+                    console.log(fileId);
+                    $.ajax({
+                        url: '/deletePatientFiles/' + fileId,
+                        method: 'get',
+                        success: function () {
+                            newRow.remove();
+                        },
+                        error: function () {
+                            alert('Une erreur s\'est produite lors de la suppression du fichier.');
+                        }
+                    });
+                }
+            });
+
+          actionsCell.appendChild(deleteButton)
+
+          dropzone.removeAllFiles();
 
           });
       }
         }
 
 );
-
-
-
-
-var minSteps = 6,
-  maxSteps = 60,
-  timeBetweenSteps = 100,
-  bytesPerStep = 100000;
-
-// dropzone.uploadFiles = function (files) {
-//   var self = this;
-
-  // for (var i = 0; i < files.length; i++) {
-
-  //   var file = files[i];
-  //    totalSteps = Math.round(Math.min(maxSteps, Math.max(minSteps, file.size / bytesPerStep)));
-
-  //   for (var step = 0; step < totalSteps; step++) {
-  //     var duration = timeBetweenSteps * (step + 1);
-  //     setTimeout(function (file, totalSteps, step) {
-  //       return function () {
-  //         file.upload = {
-  //           progress: 100 * (step + 1) / totalSteps,
-  //           total: file.size,
-  //           bytesSent: (step + 1) * file.size / totalSteps
-  //         };
-
-  //         self.emit('uploadprogress', file, file.upload.progress, file.upload.bytesSent);
-  //         if (file.upload.progress == 100) {
-  //           file.status = Dropzone.SUCCESS;
-  //           self.emit("success", file, 'success', null);
-  //           self.emit("complete", file);
-  //           self.processQueue();
-  //         }
-  //       };
-  //     }(file, totalSteps, step), duration);
-  //   }
-  // }
-// }

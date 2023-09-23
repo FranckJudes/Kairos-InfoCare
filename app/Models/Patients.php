@@ -80,10 +80,10 @@ class Patients extends Model
     
 
 
-    
-
-    public function classement()
+    public function plan_classement()
     {
-        return $this->belongsTo(PlanClassement::class);
+        return $this->belongsToMany(PlanClassement::class, 'patient_plan_classement');
     }
+
+   
 }

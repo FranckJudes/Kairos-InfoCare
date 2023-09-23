@@ -61,6 +61,9 @@ Route::controller(LangageController::class)->group(
 
 // Route::get('/get-children/{id}', [EntitesController::class, 'getChildren'])->name('api.getChildren');
 Route::get('/get-tree', [ClassementController::class, 'getEntites']);
+Route::get('/getDossierPatient/{id}', [PatientController::class, 'getDossierPatient']);
+
+
 
 //Groupe Utilisateur
 Route::resource('GroupeUtilisateur', GroupeUtilisateurController::class);
@@ -86,4 +89,5 @@ Route::get('deleteGroupeUtilisateur/{id}', [GroupeUtilisateurController::class, 
 Route::post('passwordUpdate', [PasswordController::class, 'updatePassword']);
 Route::get('deleteClassement/{id}', [ClassementController::class, 'delete']);
 Route::get('deletePatient/{id}', [PatientController::class, 'delete']);
+Route::get('/deletePatientFiles/{id}', [PatientFileController::class,'delete'])->name('deletePatientFiles.delete');
 

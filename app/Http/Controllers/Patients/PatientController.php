@@ -80,10 +80,14 @@ class PatientController extends Controller
         $patient->dateExpirationAssurance =  $request->dateExpirationAssurance;
         $patient->coordonneAssurance =  $request->coordonneAssurance;
 
-        $patient->plan_classement_id = 1;
+        
         Toastr::success('Mise a jour reussi', 'Succès');
         $patient->save();
         
+        $idsDossiers = PlanClassement::pluck('id')->toArray();
+
+        $patient->plan_classement()->attach($idsDossiers);
+
 
         return view('admin.Patients.index',[
             'patients' => Patients::all()
@@ -96,36 +100,13 @@ class PatientController extends Controller
      */
     public function show($patients)
     {
-        $customIcons = [
-            'dossier' => asset('/assets/Ztree/css/zTreeStyle/img/diy/folder.png'),
-            'fichier' => asset('/assets/Ztree/css/zTreeStyle/img/diy/2.png'),
-        ];
-        $entites = PlanClassement::all();
+        $patients = Patients::find($patients);
+        // dd($patients->id);
+        // dd($patients->plan_classement);
 
-        $treeData = [];
-        foreach ($entites as $entite) {
-            if ($entite->type == 'dossier') {
-   
-                $treeData[] = [
-                    'id' => $entite->id,
-                    'pId' => $entite->parent_id,
-                    'name' => $entite->libelle,
-                    'type' => $entite->type,
-                    'icon'=> $customIcons['dossier']
-                ];
-            }else {
-                $treeData[] = [
-                    'id' => $entite->id,
-                    'pId' => $entite->parent_id,
-                    'name' => $entite->libelle,
-                    'type' => $entite->type,
-                    'icon'=> $customIcons['fichier']
-                ];
-            }
-        }
-
+        // dd( $patients);
         return view('admin.Patients.show',[
-            'patients' => Patients::find($patients),
+            'patients' =>  $patients->id
         ]);
         
     }
@@ -135,7 +116,6 @@ class PatientController extends Controller
      */
     public function edit($patients)
     {       
-       
         return view('admin.Patients.create',[
             'patients' =>Patients::find($patients)
         ]);
@@ -165,7 +145,6 @@ class PatientController extends Controller
 
     public function delete($id){
         
-        
         try {
             Patients::find($id)->delete();
             Toastr::success('Suppression avec success', 'Succès');
@@ -177,5 +156,38 @@ class PatientController extends Controller
             Toastr::error('Echec de suppression', 'Succès');
 
         } 
+    }
+
+    public function getDossierPatient($id){
+        
+        $customIcons = [
+            'dossier' => asset('/assets/Ztree/css/zTreeStyle/img/diy/folder.png'),
+            'fichier' => asset('/assets/Ztree/css/zTreeStyle/img/diy/2.png'),
+        ];
+        $patients = Patients::find($id);
+        $entites = $patients->plan_classement;
+        $treeData = [];
+        foreach ($entites as $entite) {
+            if ($entite->type == 'dossier') {
+   
+                $treeData[] = [
+                    'id' => $entite->id,
+                    'pId' => $entite->parent_id,
+                    'name' => $entite->libelle,
+                    'type' => $entite->type,
+                    'icon'=> $customIcons['dossier']
+                ];
+            }else {
+                $treeData[] = [
+                    'id' => $entite->id,
+                    'pId' => $entite->parent_id,
+                    'name' => $entite->libelle,
+                    'type' => $entite->type,
+                    'icon'=> $customIcons['fichier']
+                ];
+            }
+        }
+    
+            return response()->json(['treeData' => $treeData]);
     }
 }

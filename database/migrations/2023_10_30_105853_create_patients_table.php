@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Patients;
 use App\Models\PlanClassement;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -84,14 +85,17 @@ return new class extends Migration
             $table->string('detailAssuranceMedicale')->nullable();
             $table->string('dateExpirationAssurance')->nullable();
             $table->string('coordonneAssurance')->nullable();
-            // $table->string('');
-            // $table->string('');
-        
-
-            // 
-            $table->foreignIdFor(PlanClassement::class);        
 
             $table->timestamps();
+        });
+
+
+        Schema::create('patient_plan_classement', function (Blueprint $table) {
+         
+            $table->foreignIdFor(Patients::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(PlanClassement::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->primary(['patients_id','plan_classement_id']);
+           
         });
     }
 
@@ -101,5 +105,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('patients');
+        Schema::dropIfExists('patient_plan_classement');
+
     }
 };

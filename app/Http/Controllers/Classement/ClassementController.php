@@ -141,7 +141,7 @@ class ClassementController extends Controller
             if ($entite->type == 'dossier') {
    
                 $treeData[] = [
-                    'id' => $entite->id,
+                    'id'   => $entite->id,
                     'pId' => $entite->parent_id,
                     'name' => $entite->libelle,
                     'type' => $entite->type,

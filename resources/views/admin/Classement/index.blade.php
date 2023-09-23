@@ -2,8 +2,10 @@
 @section('HeadLink')
     <link rel="stylesheet" href="{{asset('assets/bundles/prism/prism.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
-    <link rel="stylesheet" href="{{asset('assets/Ztree/css/zTreeStyle/zTreeStyle.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/Ztree/css/awesomeStyle/awesomeStyle.css')}}">
+    {{-- <link rel="stylesheet" href="{{asset('assets/Ztree/css/awesomeStyle/awesome.css')}}"> --}}
+    <link rel="stylesheet" href="{{asset('assets/Ztree/css/metroStyle/metroStyle.css')}}">
+    {{-- <link rel="stylesheet" href="{{asset('assets/Ztree/css/zTreeStyle/zTreeStyle.css')}}"> --}}
+
 @endsection
 
 @section('content')

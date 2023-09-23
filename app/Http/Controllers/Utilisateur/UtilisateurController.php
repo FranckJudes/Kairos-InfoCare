@@ -48,19 +48,19 @@ class UtilisateurController extends Controller
     public function store(Request $request)
     {
        
-        $request = $request->validate([
-            'name' => 'required',
-            'lastname' => 'required',
-            'sexe' => 'required',
-            'cni'  => 'required',
-            'telephone' => 'required',
-            'dateNaissance' => ['required','date'],
-            'lieuNaissance' => 'required',
-            'email' => 'required|unique',
-            'entite_id' => 'nullable',
-            'photo' => ['nullable','mimes:jpg,bmp,png,jpeg,pgp,*'],
-            'organisation' => 'nullable'
-        ]);
+        // $credentials = $request->validated([
+        //     'name' => 'required',
+        //     'lastname' => 'required',
+        //     'sexe' => 'required',
+        //     'cni'  => 'required',
+        //     'telephone' => 'required',
+        //     'dateNaissance' => ['required','date'],
+        //     'lieuNaissance' => 'required',
+        //     'email' => 'required|unique',
+        //     'entite_id' => 'nullable',
+        //     'photo' => ['nullable','mimes:jpg,bmp,png,jpeg,pgp,*'],
+        //     'organisation' => 'nullable'
+        // ]);
         $passTmp = Passwords::find(1);
         $defaultPassword = $passTmp->valeur;
        
