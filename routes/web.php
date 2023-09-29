@@ -9,11 +9,10 @@ use App\Http\Controllers\Utilisateur\UtilisateurController;
 use App\Http\Controllers\RendezVous\RendezVousController;
 use App\Http\Controllers\Classement\ClassementController;
 use App\Http\Controllers\PasswordDefaut\PasswordController;
-use App\Http\Controllers\PatientFiles\PatientFileController;
 use App\Http\Controllers\Parametres\ParametresController;
 use App\Http\Controllers\Langue\LangageController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\PatientFiles\PatientFileController;
 Route::get('/dashboard', function () {
     
     return view('admin.dashboard');
@@ -61,7 +60,7 @@ Route::controller(LangageController::class)->group(
 
 // Route::get('/get-children/{id}', [EntitesController::class, 'getChildren'])->name('api.getChildren');
 Route::get('/get-tree', [ClassementController::class, 'getEntites']);
-Route::get('/getDossierPatient/{id}', [PatientController::class, 'getDossierPatient']);
+Route::get('/getDossierPatient/{id}', [PatientFileController::class, 'getDossierPatient']);
 
 
 

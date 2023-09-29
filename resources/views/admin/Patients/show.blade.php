@@ -146,7 +146,7 @@
                         dataType: 'json',
                           success: function(data) {
                             var treeData = data.treeData;
-                            // console.log(treeData); 
+                             console.log(treeData); 
                             zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, treeData);
                           },
                           error: function (xhr, status, error) {

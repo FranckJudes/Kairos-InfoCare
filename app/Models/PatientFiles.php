@@ -13,6 +13,12 @@ class PatientFiles extends Model
     protected $fillable = [
         'patients_id',
         'plan_classement_id',
-        'filename'
+        'filename',
+        'filepath'
     ];
+
+    public function planClassement()
+    {
+        return $this->belongsTo(PlanClassement::class);
+    }
 }

@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class PlanClassement extends Model
 {
@@ -17,11 +16,7 @@ class PlanClassement extends Model
         'type'
     ];
 
-    public function patient()
-    {
-        return $this->hasMany(Patient::class);
-    }
-
+    
     public function parent()
     {
         return $this->belongsTo(PlanClassement::class, 'parent_id');
@@ -29,5 +24,11 @@ class PlanClassement extends Model
     public function children()
     {
         return $this->hasMany(Entites::class, 'parent_id');
+    }
+
+   
+    public function patientFiles()
+    {
+        return $this->hasMany(PatientFiles::class);
     }
 }

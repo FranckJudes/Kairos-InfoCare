@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Classement;
 
 use App\Http\Controllers\Controller;
-use App\Models\Entites;
 use App\Models\PlanClassement;
-use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 
 class ClassementController extends Controller

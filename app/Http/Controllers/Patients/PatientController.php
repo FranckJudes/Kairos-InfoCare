@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Patients;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestPatient;
+use App\Models\PatientFiles;
 use App\Models\Patients;
 use App\Models\PlanClassement;
 use Illuminate\Http\Request;
@@ -86,7 +87,11 @@ class PatientController extends Controller
         
         $idsDossiers = PlanClassement::pluck('id')->toArray();
 
-        $patient->plan_classement()->attach($idsDossiers);
+        
+        if ($idsDossiers) {
+            # code...
+            $patient->plan_classement()->attach($idsDossiers);
+        }
 
 
         return view('admin.Patients.index',[
@@ -100,7 +105,13 @@ class PatientController extends Controller
      */
     public function show($patients)
     {
+        // $patient = Patients::with(['plan_classement.patientFiles' => function ($query) use ($patients) {
+        //     $query->where('patients_id', $patients);
+        // }])->find($patients);
+
+        // return $patient ;
         $patients = Patients::find($patients);
+        
         // dd($patients->id);
         // dd($patients->plan_classement);
 
@@ -158,36 +169,5 @@ class PatientController extends Controller
         } 
     }
 
-    public function getDossierPatient($id){
-        
-        $customIcons = [
-            'dossier' => asset('/assets/Ztree/css/zTreeStyle/img/diy/folder.png'),
-            'fichier' => asset('/assets/Ztree/css/zTreeStyle/img/diy/2.png'),
-        ];
-        $patients = Patients::find($id);
-        $entites = $patients->plan_classement;
-        $treeData = [];
-        foreach ($entites as $entite) {
-            if ($entite->type == 'dossier') {
    
-                $treeData[] = [
-                    'id' => $entite->id,
-                    'pId' => $entite->parent_id,
-                    'name' => $entite->libelle,
-                    'type' => $entite->type,
-                    'icon'=> $customIcons['dossier']
-                ];
-            }else {
-                $treeData[] = [
-                    'id' => $entite->id,
-                    'pId' => $entite->parent_id,
-                    'name' => $entite->libelle,
-                    'type' => $entite->type,
-                    'icon'=> $customIcons['fichier']
-                ];
-            }
-        }
-    
-            return response()->json(['treeData' => $treeData]);
-    }
 }

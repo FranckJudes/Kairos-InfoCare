@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 /**
  * App\Models\Patients
  *
@@ -82,8 +81,9 @@ class Patients extends Model
 
     public function plan_classement()
     {
-        return $this->belongsToMany(PlanClassement::class, 'patient_plan_classement');
+      return $this->belongsToMany(PlanClassement::class, 'patient_plan_classement', 'patients_id', 'plan_classement_id');
     }
 
+   
    
 }

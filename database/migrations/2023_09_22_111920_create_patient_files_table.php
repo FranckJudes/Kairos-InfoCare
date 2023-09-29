@@ -17,8 +17,8 @@ return new class extends Migration
     {
         Schema::create('patient_files', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(PlanClassement::class);        
-            $table->foreignIdFor(Patients::class);        
+            $table->foreignIdFor(PlanClassement::class)->constrained('plan_classements')->onDelete('cascade');     
+            $table->foreignIdFor(Patients::class)->constrained('patients')->onDelete('cascade');       
             $table->string('filename');
             $table->string('filepath');
 

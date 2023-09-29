@@ -6,8 +6,8 @@ if (window.Dropzone) {
 }
 
 var dropzone = new Dropzone("#mydropzone", {
-        thumbnailWidth:200,
-        maxFilesize:500,
+        thumbnailWidth:2000,
+        maxFilesize: 1000,
         acceptedFiles:".pdf",
         init: function () {
           this.on('addedfile', function (file) {

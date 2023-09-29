@@ -91,7 +91,6 @@ return new class extends Migration
 
 
         Schema::create('patient_plan_classement', function (Blueprint $table) {
-         
             $table->foreignIdFor(Patients::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(PlanClassement::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->primary(['patients_id','plan_classement_id']);
