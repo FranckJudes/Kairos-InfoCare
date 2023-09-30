@@ -5,9 +5,12 @@ if (window.Dropzone) {
   Dropzone.autoDiscover = false;
 }
 
+// 
+var id_delete;
+
 var dropzone = new Dropzone("#mydropzone", {
         thumbnailWidth:2000,
-        maxFilesize: 1000,
+        maxFilesize: 10000,
         acceptedFiles:".pdf",
         init: function () {
           this.on('addedfile', function (file) {
@@ -26,7 +29,7 @@ var dropzone = new Dropzone("#mydropzone", {
           // Récupérez les données supplémentaires à partir des champs de formulaire
           var id_planClassement = document.querySelector('input[name="id_planClassement"]').value;
           var patient_id = document.querySelector('input[name="patients_id"]').value;
-
+          id_delete =  document.querySelector('input[name="id_delete"]').value;
           // Ajoutez ces données supplémentaires à la requête
           formData.append('id_planClassement', id_planClassement);
           formData.append('patient_id', patient_id);
@@ -65,27 +68,6 @@ var dropzone = new Dropzone("#mydropzone", {
           viewButton.innerHTML = '<i class="material-icons">remove_red_eye</i>';
           actionsCell.appendChild(viewButton);
 
-          ///////////////////////////////////////
-          // // // Bouton pour supprimer le PDF
-      
-          //     const deleteButton = document.createElement('i');
-          //     deleteButton.className = 'material-icons delete-file';
-          //     deleteButton.innerText = 'delete';
-          //     deleteButton.addEventListener('click', function () {
-          //         // Ajoutez ici le code pour supprimer le PDF
-          //         newRow.remove(); 
-          //         // Supprimer la ligne du tableau
-                  
-          //     });
-
-
-
-          //     actionsCell.appendChild(deleteButton);
-
-
-
-          // Supprimer//////////////////////////////////////
-
           const deleteButton = document.createElement('i');
             deleteButton.className = 'material-icons delete-file';
             deleteButton.innerText = 'delete';
@@ -93,17 +75,17 @@ var dropzone = new Dropzone("#mydropzone", {
                 if (confirm('Êtes-vous sûr de vouloir supprimer ce fichier ?')) {
                     const fileId = response.file_id; // Remplacez par l'ID du fichier à supprimer
                     console.log(fileId);
+                    newRow.remove();
                     $.ajax({
-                        url: '/deletePatientFiles/' + fileId,
+                        url: '/deletePatientFiles/' + id_delete,
                         method: 'get',
                         success: function () {
-                            newRow.remove();
                         },
                         error: function () {
                             alert('Une erreur s\'est produite lors de la suppression du fichier.');
                         }
                     });
-                }
+                } 
             });
 
           actionsCell.appendChild(deleteButton)

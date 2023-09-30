@@ -109,14 +109,9 @@ class PatientController extends Controller
         //     $query->where('patients_id', $patients);
         // }])->find($patients);
 
-        // return $patient ;
+        //  return $patient ;
         $patients = Patients::find($patients);
-        
-        // dd($patients->id);
-        // dd($patients->plan_classement);
-
-        // dd( $patients);
-        return view('admin.Patients.show',[
+              return view('admin.Patients.show',[
             'patients' =>  $patients->id
         ]);
         

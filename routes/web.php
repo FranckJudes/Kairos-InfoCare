@@ -63,6 +63,13 @@ Route::get('/get-tree', [ClassementController::class, 'getEntites']);
 Route::get('/getDossierPatient/{id}', [PatientFileController::class, 'getDossierPatient']);
 
 
+// Details
+
+Route::get('/detailsIndex/{id}', [PatientFileController::class, 'detailsIndex']);
+Route::get('/afficherPDF/{id}',  [PatientFileController::class, 'afficherPDF']);
+
+
+
 
 //Groupe Utilisateur
 Route::resource('GroupeUtilisateur', GroupeUtilisateurController::class);
