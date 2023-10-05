@@ -14,7 +14,8 @@ class PatientFiles extends Model
         'patients_id',
         'plan_classement_id',
         'filename',
-        'filepath'
+        'filepath',
+        'countPage'
     ];
 
     public function planClassement()

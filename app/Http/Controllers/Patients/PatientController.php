@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Patients;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RequestPatient;
-use App\Models\PatientFiles;
+
 use App\Models\Patients;
 use App\Models\PlanClassement;
 use Illuminate\Http\Request;
@@ -85,15 +84,6 @@ class PatientController extends Controller
         Toastr::success('Mise a jour reussi', 'Succès');
         $patient->save();
         
-        $idsDossiers = PlanClassement::pluck('id')->toArray();
-
-        
-        if ($idsDossiers) {
-            # code...
-            $patient->plan_classement()->attach($idsDossiers);
-        }
-
-
         return view('admin.Patients.index',[
             'patients' => Patients::all()
         ]);

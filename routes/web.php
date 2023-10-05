@@ -61,6 +61,7 @@ Route::controller(LangageController::class)->group(
 // Route::get('/get-children/{id}', [EntitesController::class, 'getChildren'])->name('api.getChildren');
 Route::get('/get-tree', [ClassementController::class, 'getEntites']);
 Route::get('/getDossierPatient/{id}', [PatientFileController::class, 'getDossierPatient']);
+Route::post('/getPatientFile', [PatientFileController::class, 'getPatientFile']);
 
 
 // Details

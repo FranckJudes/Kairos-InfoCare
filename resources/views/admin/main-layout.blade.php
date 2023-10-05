@@ -5,12 +5,14 @@
 <!-- blank.html  21 Nov 2019 03:54:41 GMT -->
 <head>
   <meta charset="UTF-8">
+
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <title>Admin - Dashboard</title>
   <link rel="stylesheet" href="{{asset('assets/Toastr/toastr.min.css')}}">
   <!-- General CSS Files -->
   {{-- Ajouter les liens --}}
   @yield('HeadLink')
+
   {{--  --}}
   <link rel="stylesheet" href="{{asset('assets/css/app.min.css')}}">
   <!-- Template CSS -->
@@ -18,7 +20,6 @@
   <link rel="stylesheet" href="{{asset('assets/css/components.css')}}">
   <!-- Custom style CSS -->
   <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
-  <link rel='shortcut icon' type='image/x-icon' href='assets/img/favicon.ico' />
 </head>
 
 <body>

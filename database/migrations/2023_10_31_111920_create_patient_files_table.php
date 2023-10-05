@@ -21,7 +21,8 @@ return new class extends Migration
             $table->foreignIdFor(Patients::class)->constrained('patients')->onDelete('cascade');       
             $table->string('filename');
             $table->string('filepath');
-
+            $table->string('filesize');
+            $table->string('countPage');
             $table->timestamps();
         });
     }

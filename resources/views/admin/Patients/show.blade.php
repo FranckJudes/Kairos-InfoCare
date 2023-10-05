@@ -264,6 +264,7 @@
 @extends('admin.main-layout')
 
 @section('HeadLink') 
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="stylesheet" href="{{ asset('assets/bundles/datatables/datatables.min.css')}}">
 <link rel="stylesheet" href="{{asset('assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{asset('assets/bundles/prism/prism.css')}}">
@@ -290,9 +291,6 @@
           <a href="{{url()->previous()}}" class="btn btn-light">
             <i class="fas fa-arrow-circle-left"></i> {{__('main.retour')}}
           </a>
-          <button id="delete-file-button"  class="btn btn-danger">
-            Supprimer
-          </button>
           <a id="save-button"  href="{{route('patient.show',$patients)}}" class="btn btn-success">
             Enregistrer
           </a>
@@ -332,12 +330,47 @@
                   @csrf
                       <input type="hidden" name="id_planClassement" id="id_planClassement">
                       <input type="hidden" name="id_delete" id="id_delete">
-      
                       <input type="hidden" name="patients_id" id="patients_id"  value="{{$patients}}">
-      
+                      <input type="hidden" name="file_size" id="file_size">
+                      <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+
+
                 </form>
+                <div class="mt-2">
+                  <!-- Bouton pour visualiser le document -->
+                  <button id="view-button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" style="display: none;">
+                    <i class="material-icons">remove_red_eye</i> Visualiser
+                  </button>
+                  <!-- Bouton pour enregistrer dans la base de données -->
+                  <button id="save-button1" class="btn btn-success" style="display: none;">
+                    <i class="material-icons">save</i>   Enregistrer
+                  </button>
+                  <!-- Bouton pour supprimer le document -->
+                  <button id="delete-button" class="btn btn-danger" style="display: none;">
+                    <i class="material-icons">delete</i> Supprimer
+                  </button>
+                </div>  
               </div>
             </div>
+             <div class="card">
+                <div class="card-body">
+                  <div class="table-responsive">
+                      <div class="row"><div class="col-sm-12">
+                      <table  class="table" >
+                        <thead>
+                          <tr>
+                              <th class="text-center">#</th>
+                              <th class="text-center">name</th>
+                              <th class="text-center">Taille </th>
+                              <th class="text-center">Nombre Pages</th>
+                              <th class="text-center">Action</th>
+                           </tr>
+                        </thead>
+                      <tbody id="Content12"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
           </div>
 
         </div>
@@ -373,11 +406,13 @@
   var id_delete = document.getElementById('id_delete').value;
 
   var selectedFileId; // Variable pour stocker l'ID du fichier sélectionné
-  var iframe = document.querySelector('iframe1');
+  var iframe = document.querySelector('#iframe1');
   var fileUploadForm = document.querySelector('#file-upload-form');
 
   $(document).ready(function(){
+
     $('#file-upload-form').hide();
+
     var setting = {
       data: {
         simpleData: {
@@ -390,12 +425,12 @@
     }
     
     $.ajax({
-      url: "/getDossierPatient/"+id_patient,
+      url: "/get-tree/",
       type: 'GET',
       dataType: 'json',
       success: function(data) {
         var treeData = data.treeData;
-        console.log(treeData);
+        // console.log(treeData);
         zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, treeData);
       },
       error: function (xhr, status, error) {
@@ -403,6 +438,7 @@
         console.log(error);
       }
     });
+    
 
     function onClick(event, treeId, treeNode) {
       id_Noeud = treeNode.id;
@@ -410,56 +446,42 @@
       document.getElementById('id_planClassement').value = id_Noeud;
       selectedFileId = id_Noeud;
 
-      if (treeNode.type == "fichier") {
-        var iframe = document.querySelector('#pdfViewer');
-        console.log(iframe);
-        iframe.src = "/afficherPDF/" + id_Noeud;
-
+      if (treeNode.type == "dossier") {
+        
         $('#file-upload-form').hide();
         $('#iframe1').show();
         
         // Activer le bouton
-        document.getElementById('delete-file-button').disabled = false;
       } else {
+        
         $('#file-upload-form').show();
         $('#iframe1').hide();
 
+        
+        $.ajax({
+         
+            type: 'post',
+            url: '/getPatientFile',
+            data: {
+                _token: '{{ csrf_token() }}',
+                id_Noeud: id_Noeud,
+                id_patient: id_patient
+            },
+            success: function(data) {
+                // console.log(data);
+                $('#Content12').html(data);
+            }
+
+          });
+          
+
+
         // Désactiver le bouton
-        document.getElementById('delete-file-button').disabled = true;
       }
     }  
   });
 
-  $("#delete-file-button").click(function () {
-    console.log(selectedFileId);
-    if (selectedFileId) {
-      // Envoyez une demande de suppression au serveur
-      $.ajax({
-        url: "/deletePatientFiles/" + selectedFileId, // Ajoutez une route pour la suppression
-        type: 'get',
-      
-        success: function (data) {
-          // Gérez la réussite de la suppression, par exemple, affichez un message de confirmation
-          console.log("Fichier supprimé avec succès");
-          console.log(data);
-          var treeNode = zTreeObj.getNodeByParam("id", selectedFileId);
-          if (treeNode) {
-            zTreeObj.removeNode(treeNode);
-          }
-          selectedFileId = null;
-          var iframe = document.querySelector('#pdfViewer');
-          iframe.src = "about:blank";
-        },
-        error: function (xhr, status, error) {
-          // Gérez les erreurs ici
-          console.log(error);
-        }
-      });
-    } else {
-      // Gérez le cas où aucun fichier n'est sélectionné
-      console.log("Aucun fichier sélectionné.");
-    }
-  });
+
 </script>
 
 <script src="{{asset('assets/bundles/prism/prism.js')}}"></script>
