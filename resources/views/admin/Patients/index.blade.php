@@ -80,10 +80,10 @@
     @endsection
 
     @section('FootLink')
+        <script src="{{asset('assets/bundles/prism/prism.js')}}"></script>
+        <script src="{{asset('assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js')}}"></script>
         <script src="{{asset('assets/js/page/datatables.js')}}"></script>
         <script src="{{asset('assets/bundles/datatables/datatables.min.js')}}"></script>
-        <script src="{{asset('assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js')}}"></script>
-        <script src="{{asset('assets/bundles/prism/prism.js')}}"></script>
         <script src="{{asset('assets/bundles/datatables/export-tables/dataTables.buttons.min.js')}}"></script>
         <script src="{{asset('assets/bundles/datatables/export-tables/buttons.flash.min.js')}}"></script>
         <script src="{{asset('assets/bundles/datatables/export-tables/jszip.min.js')}}"></script>
